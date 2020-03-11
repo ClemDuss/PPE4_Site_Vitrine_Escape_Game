@@ -1,1 +1,13 @@
 <h2 class="text-center text-uppercase">{{ title }}</h2>
+<div class="row">
+    <div class="col-md-3 text-center" *ngFor="let room of roomsList">
+        <div>{{ room.nomVille }}</div>
+        <ng-template [ngIf]="room.nbSalles > 1" [ngIfElse]="onlyOneRoom">
+            <div>{{ room.nbSalles }} Salles</div>
+        </ng-template>
+        <ng-template #onlyOneRoom>
+            <div>{{ room.nbSalles }} Salle</div>
+        </ng-template>
+        <button><i class="fas fa-info-circle"></i> Y aller</button>
+    </div>
+</div>
