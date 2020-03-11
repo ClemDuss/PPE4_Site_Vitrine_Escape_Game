@@ -1,0 +1,16 @@
+.header{
+    text-align: center;
+}
+
+img{
+    width: 500px;
+    max-width: 90%;
+    margin: 10px;
+}
+
+.welcome .line{
+    height: 2px;
+    width: 30px;
+    background-color: white;
+    
+}

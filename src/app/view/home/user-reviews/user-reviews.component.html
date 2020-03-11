@@ -1,0 +1,64 @@
+<h2 class="text-center text-uppercase">{{ title }}</h2>
+<div class="text-center">
+    <i class="fas fa-star-half-alt"></i>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12" *ngFor="let review of userReviewsList">
+        <div class="font-weight-bold">
+            {{ review.username }}
+            <ng-template [ngIf]="review.rating == 0" [ngIfElse]="oneStar">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+            </ng-template>
+            <ng-template #oneStar>
+                <ng-template [ngIf]="review.rating == 1" [ngIfElse]="twoStars">
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                </ng-template>
+            </ng-template>
+            <ng-template #twoStars>
+                <ng-template [ngIf]="review.rating == 2" [ngIfElse]="threeStars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                </ng-template>
+            </ng-template>
+            <ng-template #threeStars>
+                <ng-template [ngIf]="review.rating == 3" [ngIfElse]="fourStars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                </ng-template>
+            </ng-template>
+            <ng-template #fourStars>
+                <ng-template [ngIf]="review.rating == 4" [ngIfElse]="fiveStars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </ng-template>
+            </ng-template>
+            <ng-template #fiveStars>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </ng-template>
+        </div>
+        <div class="text-justify">
+            {{ review.comment }}
+        </div>
+    </div>
+</div>
