@@ -4,9 +4,12 @@
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+@import './assets/fonts/Lato.css';
+
 html, body { height: 100%; }
 body { 
     margin: 0; 
-    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    /*font-family: Roboto, "Helvetica Neue", sans-serif; */
+    font-family: Lato, sans-serif;
     background: #bd0000;
 }

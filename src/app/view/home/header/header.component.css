@@ -1,16 +1,20 @@
-.header{
-    text-align: center;
-}
-
 img{
     width: 500px;
     max-width: 90%;
-    margin: 10px;
+}
+
+.welcome{
+    margin-top: -15px;
 }
 
 .welcome .line{
     height: 2px;
-    width: 30px;
+    width: 40px;
     background-color: white;
-    
+    position: absolute;
+    margin-top: 8px;
+}
+
+.left{
+    margin-left: -40px;
 }

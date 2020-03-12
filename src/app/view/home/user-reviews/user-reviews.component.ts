@@ -16,6 +16,11 @@ const reviewsList: reviewsFormat[] = [
     username: 'Seb',
     rating: 3,
     comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum at varius vel pharetra vel turpis nunc. Arcu odio ut sem nulla pharetra diam sit amet. Adipiscing at in tellus integer feugiat scelerisque varius morbi enim. Tellus molestie nunc non blandit. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Fames ac turpis egestas integer eget aliquet. Pharetra magna ac placerat vestibulum. Mi sit amet mauris commodo quis imperdiet massa tincidunt. Sed lectus vestibulum mattis ullamcorper. Odio facilisis mauris sit amet. Accumsan sit amet nulla facilisi. Morbi leo urna molestie at elementum. Purus in mollis nunc sed. Turpis egestas sed tempus urna et. Ut sem nulla pharetra diam."
+  },
+  {
+    username: 'Clem',
+    rating: 5,
+    comment: "Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte."
   }
 ]
 
@@ -25,7 +30,7 @@ const reviewsList: reviewsFormat[] = [
   styleUrls: ['./user-reviews.component.css']
 })
 export class UserReviewsComponent implements OnInit {
-  public title: string = 'Nos salles';
+  public title: string = 'Avis';
 
   public userReviewsList = reviewsList;
 
@@ -37,6 +42,10 @@ export class UserReviewsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public numberOfReviews(): number{
+    return this.userReviewsList.length;
   }
 
 }

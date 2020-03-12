@@ -12,6 +12,7 @@ import { UserReviewsComponent } from './view/home/user-reviews/user-reviews.comp
 import { RoomsComponent } from './view/home/rooms/rooms.component';
 import { PicturesComponent } from './view/home/pictures/pictures.component';
 import { FooterComponent } from './view/home/footer/footer.component';
+import { SectionsTitleComponent } from './shared/components/sections-title/sections-title.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FooterComponent } from './view/home/footer/footer.component';
     UserReviewsComponent,
     RoomsComponent,
     PicturesComponent,
-    FooterComponent
+    FooterComponent,
+    SectionsTitleComponent
   ],
   imports: [
     BrowserModule,
