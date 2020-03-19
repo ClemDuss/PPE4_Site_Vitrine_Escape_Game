@@ -1,0 +1,13 @@
+.goToTop{
+    height: 50px;
+}
+
+.goToTop i{
+    font-size: 40px;
+    transition: ease 0.1s all;
+}
+
+.goToTop i:hover{
+    font-size: 50px;
+    cursor: pointer;
+}

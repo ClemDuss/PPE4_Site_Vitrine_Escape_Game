@@ -1,8 +1,8 @@
-<header class="text-center mb-5">
+<header class="text-center mb-5 text-white">
     <div class="logo">
         <img [src]="logo" class="mw-100 m-4">
     </div>
-    <div class="welcome">
+    <div class="welcome" *ngIf="welcomeText">
         <span class="line left">&nbsp;</span>
         <span class="m-1">{{ welcomeText }}</span>
         <span class="line"></span>

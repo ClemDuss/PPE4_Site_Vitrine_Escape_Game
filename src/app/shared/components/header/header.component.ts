@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  logoPath = '../../../../assets/images/logos/';
-  logo = this.logoPath + 'logo_escape_game_white.svg';
-  welcomeText = 'Bienvenue'
+  @Input() welcomeText;
 
+  public logoPath: string = '../../../../assets/images/logos/';
+  public logo: string = this.logoPath + 'logo_escape_game_white.svg';
+ 
   constructor() { }
 
   ngOnInit(): void {
