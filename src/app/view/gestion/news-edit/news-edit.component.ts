@@ -1,21 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { NewsAddComponent } from './news-add/news-add.component';
+import { Moment } from 'moment';
 
-export interface PeriodicElement {
-  activated: boolean;
-  startDate: string;
-  endDate: string;
+export interface DialogData {
   title: string;
+  startDate: Moment;
+  endDate: Moment;
+  description: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {activated: true, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-  {activated: true, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-  {activated: true, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-  {activated: true, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-  {activated: false, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-  {activated: true, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-  {activated: true, startDate: '2019-12-12', endDate: '2019-12-20', title: 'L\'avant Noël'},
-];
 
 @Component({
   selector: 'app-news-edit',
@@ -23,12 +16,23 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./news-edit.component.css']
 })
 export class NewsEditComponent implements OnInit {
-  public welcomeText: string = 'Gestion des news'
+  public welcomeText: string = 'Gestion des news';
 
-  public displayedColumns: string[] = ['activated', 'startDate', 'endDate', 'title'];
-  public dataSource: PeriodicElement[] = ELEMENT_DATA;
+  public btn_addNews_content: string = 'Ajouter une news';
+  public btn_addNews_icon: string = 'add';
 
-  constructor() { }
+  animal: string;
+  name: string;
+
+  constructor(
+    public dialog: MatDialog,
+  ) { }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(NewsAddComponent, {
+      width: '500px'
+    });
+  }
 
   ngOnInit(): void {
   }

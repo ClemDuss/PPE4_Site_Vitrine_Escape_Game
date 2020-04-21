@@ -1,14 +1,15 @@
-.btn-register{
+.btn{
     color: white;
     border: solid 1px white;
     transition: ease 0.2s all;
 }
 
-.btn-register:hover{
+.btn:hover{
     color: #BD0000;
     background-color: white;
 }
 
-.divider{
-    height: 1px;
+mat-icon{
+    margin-top: -10px;
+    padding-top: -10px;
 }

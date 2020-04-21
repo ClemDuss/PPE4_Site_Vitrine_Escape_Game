@@ -1,6 +1,28 @@
 <div class="text-white">
     <app-header [welcomeText]="welcomeText"></app-header>
     <div class="container">
-        
+        <div class="col-4 offset-4">
+            <div class="title">
+                Mode d'affichage des avis
+            </div>
+            <mat-radio-group aria-label="Select an option" [selected]="chx_selectedOption">
+                <div><mat-radio-button value="random" (change)="chx_valueChange('random')">Aléatoirement</mat-radio-button></div>
+                <div><mat-radio-button value="byRating" (change)="chx_valueChange('byRating')">Selon la notation</mat-radio-button></div>
+            </mat-radio-group>
+            <div *ngIf="displayRatingSelection">
+                <div class="w-100 m-2 bg-white divider"></div>
+                <mat-form-field>
+                    <mat-label>Favorite food</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let someRate of ratingSelection" [value]="someRate.value">
+                            {{ someRate.displayValue }} <i class="fas fa-star"></i>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="text-right">
+                <app-button [content]="'Enregistrer les modifications'" (clickCusto)="btn_saveChanges_click()"></app-button>
+            </div>
+        </div>
     </div>
 </div>

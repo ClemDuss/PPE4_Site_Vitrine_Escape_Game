@@ -13,3 +13,39 @@ body {
     font-family: Lato, sans-serif;
     background: #bd0000;
 }
+
+.form-modal-error-snackbar{
+    background: #dc3545;
+    border: solid 1px whitesmoke;
+    color: white;
+}
+
+.form-modal-error-snackbar button{
+    background: whitesmoke;
+    color: #dc3545;
+    border: solid 1px whitesmoke;
+    transition: ease 0.2s all;
+}
+
+.form-modal-error-snackbar button:hover{
+    background: #dc3545;
+    color: whitesmoke;
+}
+
+.form-modal-success-snackbar{
+    background: #28a745;
+    border: solid 1px whitesmoke;
+    color: white;
+}
+
+.form-modal-success-snackbar button{
+    background: whitesmoke;
+    color: #28a745;
+    border: solid 1px whitesmoke;
+    transition: ease 0.2s all;
+}
+
+.form-modal-success-snackbar button:hover{
+    background: #28a745;
+    color: whitesmoke;
+}

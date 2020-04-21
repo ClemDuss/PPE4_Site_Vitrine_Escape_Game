@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  public copyText: string = '© CJT-2020';
+  private actualDate = new Date();
+  public copyText: string = '© CJT-' + this.actualDate.getFullYear();
 
   constructor() { }
 

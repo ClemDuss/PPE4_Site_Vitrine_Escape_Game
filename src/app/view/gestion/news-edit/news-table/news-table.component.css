@@ -1,0 +1,15 @@
+table{
+    color: white;
+}
+
+thead{
+    background-color: white;
+    color: #bd0000;
+}
+
+tbody tr:hover{
+    cursor: pointer;
+    background-color: rgb(197, 197, 197);
+    color: #bd0000;
+    transition: all 0.2s ease;
+}

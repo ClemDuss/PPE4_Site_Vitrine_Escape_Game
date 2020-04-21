@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Activé</th>
+        <th scope="col">Début</th>
+        <th scope="col">Fin</th>
+        <th scope="col">Titre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let element of allNews, index as newsId" [id]="'news_' + newsId">
+        <th scope="row"><mat-checkbox [checked]="element.getActivated()"></mat-checkbox></th>
+        <td>
+            <ng-template [ngIf]="element.getStartDate() == element.getEndDate()  || element.getStartDate() == null" [ngIfElse]="endDate">
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </ng-template>
+            <ng-template #endDate>
+                {{functionsService.dateToStringToDisplay(element.getStartDate())}}
+            </ng-template>
+        </td>
+        <td>{{ functionsService.dateToStringToDisplay(element.getEndDate()) }}</td>
+        <td>{{ element.getTitle() }}</td>
+      </tr>
+    </tbody>
+</table>
