@@ -21,6 +21,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -92,6 +93,7 @@ export const MY_FORMAT: MatDateFormats = {
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },

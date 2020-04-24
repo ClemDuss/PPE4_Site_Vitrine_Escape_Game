@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsAddComponent } from './news-add/news-add.component';
 import { Moment } from 'moment';
+import { News } from 'src/app/shared/models/news';
+import { NewsService } from 'src/app/shared/services/news.service';
 
 export interface DialogData {
   title: string;
@@ -26,11 +28,14 @@ export class NewsEditComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    private _newsService: NewsService,
   ) { }
 
   openDialog(): void {
+    this._newsService.setSelectedId(null);
     const dialogRef = this.dialog.open(NewsAddComponent, {
-      width: '500px'
+      width: '500px',
+      data: {type: 'add', news: new News()}
     });
   }
 

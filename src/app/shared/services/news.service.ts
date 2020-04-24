@@ -10,7 +10,11 @@ export class NewsService {
   private _lesNews: News[] = [new News()];
   private _lesNewsSubject: Subject<News[]> = new Subject<News[]>();
 
-  private _nombreNews: Subject<Number> = new Subject<Number>();
+  private _nombreNews: Subject<number> = new Subject<number>();
+
+  private _selectedId: Subject<number> = new Subject<number>();
+  private _selectedActivated: Subject<boolean> = new Subject<boolean>();
+  private _selectedNews: Subject<News> = new Subject<News>();
 
   constructor() {
     let tempNews = new News();
@@ -61,6 +65,9 @@ export class NewsService {
     this._lesNews.shift();
 
     this.refreshNews();
+
+    this._selectedId.next(0);
+    this._selectedNews.next(null);
   }
 
   //OBSERVER
@@ -68,8 +75,20 @@ export class NewsService {
     return this._lesNewsSubject.asObservable();
   }
 
-  public getNumberOfNews(): Observable<Number>{
+  public getNumberOfNews(): Observable<number>{
     return this._nombreNews.asObservable();
+  }
+
+  public getSelectedId(): Observable<number>{
+    return this._selectedId.asObservable();
+  }
+
+  public getSelectedActivated(): Observable<boolean>{
+    return this._selectedActivated.asObservable();
+  }
+
+  public getSelectedNews(): Observable<News>{
+    return this._selectedNews.asObservable();
   }
 
   //FUNCTIONS
@@ -93,6 +112,42 @@ export class NewsService {
 
   private dev_addInNewsList(theNews: News): void{
     this._lesNews.push(theNews);
+  }
+
+  /**
+   * Modifier les informations d'une news existante
+   * @param theNews La news mopdifiée
+   */
+  public editNews(theNews: News): void{
+    this._lesNews.forEach(element=>{
+      if(theNews.getId() == element.getId()){
+        element.setTitle(theNews.getTitle());
+        element.setDescription(theNews.getDescription());
+        element.setStartDate(theNews.getStartDate());
+        element.setEndDate(theNews.getEndDate());
+      }
+    });
+    this.refreshNews();
+  }
+
+  public deleteNews(id: number): void{
+    let indexToDelete: number = -1;
+    this._lesNews.forEach(element=>{
+      indexToDelete++;
+      if(element.getId() == id){
+        this._lesNews.splice(indexToDelete, 1);
+      }
+    });
+    this._selectedNews.next(null);
+    this.refreshNews();
+  }
+
+  public changeActivatedState(id: number): void{
+    this._lesNews.forEach(element=>{
+      if(element.getId() == id){
+        element.setActivated(!element.getActivated());
+      }
+    });
   }
 
   //SET
@@ -121,10 +176,37 @@ export class NewsService {
    * @param theNews La news à ajouter
    */
   public addNews(theNews: News): void{
+    theNews.setId(this.dev_setId());
     this.dev_addInNewsList(theNews);
     this.addNewsToDB(theNews);
     this.refreshNews();
     this._lesNewsSubject.next(this._lesNews);
+  }
+
+  /**
+   * Sélectionner une news
+   * @param id id de la news sélectionné
+   */
+  public setSelectedId(id: number): void{
+    this._selectedId.next(id);
+    this._selectedActivated.next();
+    this._selectedNews.next(null);
+    this._lesNews.forEach(theNews => {
+      if(theNews.getId() == id){
+        this._selectedNews.next(theNews);
+      }
+    });
+  }
+
+  private dev_setId(): number{
+    let newId: number = 0;
+    this._lesNews.forEach(element => {
+      if(element.getId() > newId){
+        newId = element.getId();
+      }
+    });
+    newId++;
+    return newId;
   }
 
   //GET
@@ -137,5 +219,19 @@ export class NewsService {
     this.refreshNews();
     allNewsList = this._lesNews;
     return allNewsList;
+  }
+
+  /**
+   * Retourne la news en fonction de l'id
+   * @param id Id de la news à retrouver
+   */
+  public getById(id: number): News{
+    let news: News;
+    this._lesNews.forEach(theNews => {
+      if(theNews.getId() == id){
+        news = theNews;
+      }
+    });
+    return news;
   }
 }

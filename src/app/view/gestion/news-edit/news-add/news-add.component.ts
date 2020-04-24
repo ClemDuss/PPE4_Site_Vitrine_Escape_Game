@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { NewsService } from 'src/app/shared/services/news.service';
 import { FunctionsService } from 'src/app/shared/services/functions.service';
+import { Subscription } from 'rxjs';
 
 export interface DialogData {
   title: string;
@@ -20,7 +21,9 @@ export interface DialogData {
   styleUrls: ['./news-add.component.css']
 })
 export class NewsAddComponent implements OnInit {
-  private _theNews: News = new News;
+  private _theNews: News;
+
+  public dialogTitle: string ='Ajouter une nouvelle news';
 
   public btn_validate_content: string = 'Valider';
   public btn_cancel_content: string = 'Annuler';
@@ -38,12 +41,32 @@ export class NewsAddComponent implements OnInit {
   public input_description_value: FormControl = new FormControl();
   public input_description_placeholder: string = 'Entrez la description de la news';
 
+  private _newsEditId: number;
+
   constructor(
     public dialogRef: MatDialogRef<NewsAddComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: {type: string, news: News},
     private _snackBar: MatSnackBar,
     private _newsService : NewsService,
-  ) { }
+  ) {
+    this._theNews = new News();
+    switch(data.type){
+      case 'add':
+        this.btn_validate_content = "Valider l'ajout";
+        this.dialogTitle = "Ajouter une nouvelle news";
+        break;
+      case 'edit':
+        this.btn_validate_content = "Valider les modifications";
+        this.dialogTitle = "Modifier une news";
+        this._theNews = data.news;
+        this._newsEditId = this._theNews.getId();
+        this.input_title_value = new FormControl(this._theNews.getTitle());
+        this.datepicker_start_value = new FormControl(this._theNews.getStartDate());
+        this.datepicker_end_value = new FormControl(this._theNews.getEndDate());
+        this.input_description_value = new FormControl(this._theNews.getDescription());
+        break;
+    }
+  }
 
   ngOnInit(): void {
   }
@@ -56,15 +79,29 @@ export class NewsAddComponent implements OnInit {
 
       theNews = new News();
       theNews.setTitle(this.input_title_value.value);
-      if(this.datepicker_start_value.value != null){
-        theNews.setStartDate(this.datepicker_start_value.value.toDate());
-      }
-      theNews.setEndDate(this.datepicker_end_value.value.toDate());
       theNews.setDescription(this.input_description_value.value);
 
-      this._newsService.addNews(theNews);
-
-      this.openSnackBar("News ajoutée !", "OK", 'success');
+      switch(this.data.type){
+        case 'add':
+          if(this.datepicker_start_value.value != null){
+            theNews.setStartDate(this.datepicker_start_value.value.toDate());
+          }
+          theNews.setEndDate(this.datepicker_end_value.value.toDate());
+          this._newsService.addNews(theNews);
+          this.openSnackBar("News ajoutée !", "OK", 'success');
+          break;
+        case 'edit':
+          theNews.setId(this._newsEditId);
+          if(this.datepicker_start_value.value != null){
+            theNews.setStartDate(this.datepicker_start_value.value);
+          }else{
+            theNews.setStartDate(null);
+          }
+          theNews.setEndDate(this.datepicker_end_value.value);
+          this._newsService.editNews(theNews);
+          this.openSnackBar("News modifiée !", "OK", 'success');
+          break;
+      }
 
       this.dialogRef.close();
     }else{
@@ -82,14 +119,14 @@ export class NewsAddComponent implements OnInit {
         this._snackBar.open(message, action, {
           duration: 2000,
           verticalPosition: position,
-          panelClass: ['form-modal-error-snackbar']
+          panelClass: ['error-snackbar']
         });
         break;
       case 'success':
         this._snackBar.open(message, action, {
           duration: 2000,
           verticalPosition: position,
-          panelClass: ['form-modal-success-snackbar']
+          panelClass: ['success-snackbar']
         });
         break;
     }

@@ -1,25 +1,43 @@
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Activé</th>
-        <th scope="col">Début</th>
-        <th scope="col">Fin</th>
-        <th scope="col">Titre</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let element of allNews, index as newsId" [id]="'news_' + newsId">
-        <th scope="row"><mat-checkbox [checked]="element.getActivated()"></mat-checkbox></th>
-        <td>
-            <ng-template [ngIf]="element.getStartDate() == element.getEndDate()  || element.getStartDate() == null" [ngIfElse]="endDate">
-                <i class="fas fa-long-arrow-alt-right"></i>
-            </ng-template>
-            <ng-template #endDate>
-                {{functionsService.dateToStringToDisplay(element.getStartDate())}}
-            </ng-template>
-        </td>
-        <td>{{ functionsService.dateToStringToDisplay(element.getEndDate()) }}</td>
-        <td>{{ element.getTitle() }}</td>
-      </tr>
-    </tbody>
-</table>
+<div class="row">
+  <div class="col-10">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center" style="width: 75px;">Activé</th>
+            <th scope="col">Début</th>
+            <th scope="col">Fin</th>
+            <th scope="col" style="width: 300px;">Titre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of allNews, index as newsId" [class]="selectedId == element.getId() ? 'selected' : ''" [id]="'news_' + newsId" (click)="selectThisNews(element.getId())" (dblclick)="openEditNews(selectedNews.getId())">
+            <th scope="row" class="text-center">
+              <ng-template [ngIf]="element.getActivated()" [ngIfElse]="notActivated">
+                <mat-icon>check</mat-icon>
+              </ng-template>
+              <ng-template #notActivated>
+                <mat-icon>close</mat-icon>
+              </ng-template>
+            </th>
+            <td>
+                <ng-template [ngIf]="element.getStartDate() == element.getEndDate()  || element.getStartDate() == null" [ngIfElse]="endDate">
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                </ng-template>
+                <ng-template #endDate>
+                    {{functionsService.dateToStringToDisplay(element.getStartDate())}}
+                </ng-template>
+            </td>
+            <td>{{ functionsService.dateToStringToDisplay(element.getEndDate()) }}</td>
+            <td>{{ element.getTitle() }}</td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+  <div class="col-2 pt-5 text-center" *ngIf="selectedNews != null">
+    <div class="py-3 border border-light rounded">
+      <app-button [content]="'Modifier'" (click)="openEditNews(selectedNews.getId())"></app-button>
+      <mat-slide-toggle class="my-3" [checked]="selectedNews.getActivated()" (change)="changeActivatedState()"> Activée</mat-slide-toggle>
+      <app-button [content]="'Supprimer'" (click)="btn_delete_click()"></app-button>
+    </div>
+  </div>
+</div>
