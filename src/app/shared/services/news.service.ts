@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { News } from '../models/news';
-import * as moment from 'moment';
 import { Subject, Observable } from 'rxjs';
+import { newsData } from '../data/news-data';
 
 @Injectable({
   providedIn: 'root'
@@ -17,50 +17,10 @@ export class NewsService {
   private _selectedNews: Subject<News> = new Subject<News>();
 
   constructor() {
-    let tempNews = new News();
-    tempNews.setId(1);
-    tempNews.setTitle('Avant Noël');
-    tempNews.setStartDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setEndDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setDescription('C\'est une courte description que je vois là !');
-    tempNews.setActivated(true);
-    this.dev_addInNewsList(tempNews);
-
-    tempNews = new News();
-    tempNews.setId(2);
-    tempNews.setTitle('Avant Noël');
-    tempNews.setStartDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setEndDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setDescription('C\'est une courte description que je vois là !');
-    tempNews.setActivated(true);
-    this.dev_addInNewsList(tempNews);
-
-    tempNews = new News();
-    tempNews.setId(3);
-    tempNews.setTitle('Avant Noël');
-    tempNews.setStartDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setEndDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setDescription('C\'est une courte description que je vois là !');
-    tempNews.setActivated(true);
-    this.dev_addInNewsList(tempNews);
-
-    tempNews = new News();
-    tempNews.setId(4);
-    tempNews.setTitle('Avant Noël');
-    tempNews.setStartDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setEndDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setDescription('C\'est une courte description que je vois là !');
-    tempNews.setActivated(false);
-    this.dev_addInNewsList(tempNews);
-
-    tempNews = new News();
-    tempNews.setId(5);
-    tempNews.setTitle('Avant Noël');
-    tempNews.setStartDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setEndDate(new Date('2018-12-21 12:02:00'));
-    tempNews.setDescription('C\'est une courte description que je vois là !');
-    tempNews.setActivated(true);
-    this.dev_addInNewsList(tempNews);
+    let dev_newsData = newsData;
+    dev_newsData.forEach(element=>{
+      this.dev_addInNewsList(element);
+    });
 
     this._lesNews.shift();
 

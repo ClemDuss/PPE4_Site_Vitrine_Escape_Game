@@ -6,13 +6,20 @@ export class News {
     private _description: string;
     private _activated: boolean;
 
-    constructor(){
-        this._id = null;
-        this._title = "";
-        this._startDate = null;
-        this._endDate = null;
-        this._description = "";
-        this._activated = true;
+    constructor(
+        id: number = null,
+        title: string = null,
+        startDate: Date = null,
+        endDate: Date = null,
+        description: string = null,
+        activated: boolean = true
+    ){
+        this._id = id;
+        this._title = title;
+        this._startDate = startDate;
+        this._endDate = endDate;
+        this._description = description;
+        this._activated = activated;
     }
 
     //GET
