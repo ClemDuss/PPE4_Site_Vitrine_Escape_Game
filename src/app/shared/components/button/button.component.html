@@ -2,5 +2,7 @@
     <mat-icon *ngIf="icon">
         {{ icon }}
     </mat-icon>
-    {{ content }}
+    <span [ngClass]="icon ? 'iconMove':''">
+        {{ content }}
+    </span>
 </button>

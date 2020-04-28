@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-10">
+  <div [class]="selectedNews != null ? 'col-10': 'col-12'">
     <table class="table">
         <thead>
           <tr>
@@ -35,9 +35,9 @@
   </div>
   <div class="col-2 pt-5 text-center" *ngIf="selectedNews != null">
     <div class="py-3 border border-light rounded">
-      <app-button [content]="'Modifier'" (click)="openEditNews(selectedNews.getId())"></app-button>
+      <app-button [icon]="'edit'" [content]="'Modifier'" (click)="openEditNews(selectedNews.getId())"></app-button>
       <mat-slide-toggle class="my-3" [checked]="selectedNews.getActivated()" (change)="changeActivatedState()"> Activée</mat-slide-toggle>
-      <app-button [content]="'Supprimer'" (click)="btn_delete_click()"></app-button>
+      <app-button [icon]="'delete'" [content]="'Supprimer'" (click)="btn_delete_click()"></app-button>
     </div>
   </div>
 </div>

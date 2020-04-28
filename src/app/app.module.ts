@@ -23,8 +23,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
-
-
 import { HomeComponent } from './view/home/home.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { NewsComponent } from './view/home/news/news.component';
@@ -41,6 +39,7 @@ import { PhotosEditComponent } from './view/gestion/photos-edit/photos-edit.comp
 import { ButtonComponent } from './shared/components/button/button.component';
 import { NewsAddComponent } from './view/gestion/news-edit/news-add/news-add.component';
 import { NewsTableComponent } from './view/gestion/news-edit/news-table/news-table.component';
+import { BackMenuButtonComponent } from './shared/components/back-menu-button/back-menu-button.component';
 
 export const MY_FORMAT: MatDateFormats = {
   parse: {
@@ -73,6 +72,7 @@ export const MY_FORMAT: MatDateFormats = {
     ButtonComponent,
     NewsAddComponent,
     NewsTableComponent,
+    BackMenuButtonComponent,
   ],
   imports: [
     BrowserModule,

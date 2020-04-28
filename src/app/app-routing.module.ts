@@ -8,11 +8,11 @@ import { PhotosEditComponent } from './view/gestion/photos-edit/photos-edit.comp
 
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'gestion', component: GestionComponent},
-  {path: 'gestion/avis', component: ReviewsEditComponent},
-  {path: 'gestion/news', component: NewsEditComponent},
-  {path: 'gestion/photos', component: PhotosEditComponent},
+  {path: '', component: HomeComponent, data: {animation: 'Home'}},
+  {path: 'gestion', component: GestionComponent, data: {animation: 'Gestion'}},
+  {path: 'gestion/avis', component: ReviewsEditComponent, data: {animation: 'Reviews'}},
+  {path: 'gestion/news', component: NewsEditComponent, data: {animation: 'News'}},
+  {path: 'gestion/photos', component: PhotosEditComponent, data: {animation: 'Pictures'}},
 ];
 
 @NgModule({
