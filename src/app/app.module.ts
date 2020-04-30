@@ -40,6 +40,8 @@ import { ButtonComponent } from './shared/components/button/button.component';
 import { NewsAddComponent } from './view/gestion/news-edit/news-add/news-add.component';
 import { NewsTableComponent } from './view/gestion/news-edit/news-table/news-table.component';
 import { BackMenuButtonComponent } from './shared/components/back-menu-button/back-menu-button.component';
+import { ReviewsEditDisplayComponent } from './view/gestion/reviews-edit/reviews-edit-display/reviews-edit-display.component';
+import { ReviewsStarsComponent } from './view/home/user-reviews/reviews-stars/reviews-stars.component';
 
 export const MY_FORMAT: MatDateFormats = {
   parse: {
@@ -73,6 +75,8 @@ export const MY_FORMAT: MatDateFormats = {
     NewsAddComponent,
     NewsTableComponent,
     BackMenuButtonComponent,
+    ReviewsEditDisplayComponent,
+    ReviewsStarsComponent,
   ],
   imports: [
     BrowserModule,

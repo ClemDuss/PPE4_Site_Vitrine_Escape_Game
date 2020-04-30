@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FunctionsService {
 
-  constructor() { }
+  constructor(
+    private _snackBar: MatSnackBar,
+  ) { }
 
   /**
    * Revenir au menu de gestion
@@ -55,5 +58,35 @@ export class FunctionsService {
     const day = new Intl.DateTimeFormat('fr', { day: '2-digit' }).format(theDate);
     theString = `${day} ${month} ${year}`;
     return theString;
+  }
+
+  /**
+   * Affichage d'une SnackBar 'Error' à savoir rouge
+   * @param message Message d'alerte
+   * @param actionBtnContent Texte du bouton d'action (qui dit avoir pris connaissance de l'alerte)
+   * @param delay temps d'affichage de l'alerte avant fermeture
+   * @param position position verticale de la snackBar
+   */
+  public openErrorSnackBar(message: string, delay: number = 2000, actionBtnContent: string = "OK", position: MatSnackBarVerticalPosition = 'top'): void{
+    this._snackBar.open(message, actionBtnContent, {
+      duration: 2000,
+      verticalPosition: position,
+      panelClass: ['error-snackbar']
+    });
+  }
+
+  /**
+   * Affichage d'une SnackBar 'Success' à savoir verte
+   * @param message Message d'alerte
+   * @param actionBtnContent Texte du bouton d'action (qui dit avoir pris connaissance de l'alerte)
+   * @param delay temps d'affichage de l'alerte avant fermeture
+   * @param position position verticale de la snackBar
+   */
+  public openSuccessSnackBar(message: string, delay: number = 2000, actionBtnContent: string = "OK", position: MatSnackBarVerticalPosition = 'top'): void{
+    this._snackBar.open(message, actionBtnContent, {
+      duration: 2000,
+      verticalPosition: position,
+      panelClass: ['success-snackbar']
+    });
   }
 }

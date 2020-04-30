@@ -5,13 +5,6 @@ import { Moment } from 'moment';
 import { News } from 'src/app/shared/models/news';
 import { NewsService } from 'src/app/shared/services/news.service';
 
-export interface DialogData {
-  title: string;
-  startDate: Moment;
-  endDate: Moment;
-  description: string;
-}
-
 @Component({
   selector: 'app-news-edit',
   templateUrl: './news-edit.component.html',

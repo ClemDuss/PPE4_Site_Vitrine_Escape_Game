@@ -1,0 +1,50 @@
+<ng-template [ngIf]="rating == 0" [ngIfElse]="oneStar">
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+</ng-template>
+<ng-template #oneStar>
+    <ng-template [ngIf]="rating == 1" [ngIfElse]="twoStars">
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </ng-template>
+</ng-template>
+<ng-template #twoStars>
+    <ng-template [ngIf]="rating == 2" [ngIfElse]="threeStars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </ng-template>
+</ng-template>
+<ng-template #threeStars>
+    <ng-template [ngIf]="rating == 3" [ngIfElse]="fourStars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </ng-template>
+</ng-template>
+<ng-template #fourStars>
+    <ng-template [ngIf]="rating == 4" [ngIfElse]="fiveStars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+    </ng-template>
+</ng-template>
+<ng-template #fiveStars>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+</ng-template>

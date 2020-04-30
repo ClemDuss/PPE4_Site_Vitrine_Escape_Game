@@ -1,28 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ReviewsService } from 'src/app/shared/services/reviews.service';
+import { Review } from 'src/app/shared/models/review';
 
 interface reviewsFormat{
   username: string;
   rating: number;
   comment: string;
 }
-
-const reviewsList: reviewsFormat[] = [
-  {
-    username: 'Patt',
-    rating: 4,
-    comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porta lorem mollis aliquam ut porttitor leo. Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices. Feugiat pretium nibh ipsum consequat nisl. Fringilla urna porttitor rhoncus dolor. Arcu non odio euismod lacinia at. Laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt. Et magnis dis parturient montes nascetur. Lorem ipsum dolor sit amet consectetur adipiscing elit. Volutpat consequat mauris nunc congue nisi vitae. Semper auctor neque vitae tempus quam pellentesque nec. Odio facilisis mauris sit amet massa vitae tortor condimentum. Ac odio tempor orci dapibus."
-  },
-  {
-    username: 'Seb',
-    rating: 3,
-    comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum at varius vel pharetra vel turpis nunc. Arcu odio ut sem nulla pharetra diam sit amet. Adipiscing at in tellus integer feugiat scelerisque varius morbi enim. Tellus molestie nunc non blandit. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Fames ac turpis egestas integer eget aliquet. Pharetra magna ac placerat vestibulum. Mi sit amet mauris commodo quis imperdiet massa tincidunt. Sed lectus vestibulum mattis ullamcorper. Odio facilisis mauris sit amet. Accumsan sit amet nulla facilisi. Morbi leo urna molestie at elementum. Purus in mollis nunc sed. Turpis egestas sed tempus urna et. Ut sem nulla pharetra diam."
-  },
-  {
-    username: 'Clem',
-    rating: 5,
-    comment: "Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte."
-  }
-]
 
 @Component({
   selector: 'app-user-reviews',
@@ -32,19 +16,23 @@ const reviewsList: reviewsFormat[] = [
 export class UserReviewsComponent implements OnInit {
   public title: string = 'Avis';
 
-  public userReviewsList = reviewsList;
+  public userReviewsList: Review[];
 
   public pictoPath: string = '../../../../assets/images/picto/Stars/';
   public emptyStar: string = this.pictoPath + 'star_empty_white.svg';
   public fullStar: string = this.pictoPath + 'star_full_white.svg';
   public middleStar: string = this.pictoPath + 'star_middle_white.svg';
 
-  constructor() { }
+  constructor(
+    private _reviewsService: ReviewsService,
+  ) {
+    this.userReviewsList = _reviewsService.getAllReviews();
+  }
 
   ngOnInit(): void {
   }
 
-  public numberOfReviews(): number{
+  public getNumberOfReviews(): number{
     return this.userReviewsList.length;
   }
 

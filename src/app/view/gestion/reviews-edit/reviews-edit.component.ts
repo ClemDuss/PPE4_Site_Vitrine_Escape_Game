@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatRadioButton } from '@angular/material/radio';
 import { FunctionsService } from 'src/app/shared/services/functions.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReviewsEditDisplayComponent } from './reviews-edit-display/reviews-edit-display.component';
+import { ReviewsService } from 'src/app/shared/services/reviews.service';
 
 interface Rating {
   value: string;
@@ -19,6 +22,9 @@ export class ReviewsEditComponent implements OnInit {
 
   public displayRatingSelection: boolean = false;
 
+  public btn_editDisplayMode_content: string = "Modifier le mode d'affichage";
+  public btn_editDisplayMode_icon: string = "edit";
+
   public ratingSelection: Rating[] = [
     {value: '0', displayValue: '0'},
     {value: '1', displayValue: '1'},
@@ -28,23 +34,46 @@ export class ReviewsEditComponent implements OnInit {
     {value: '5', displayValue: '5'}
   ]
 
+  public displayOptionName: string;
+  public nbToDisplay: number;
+
   constructor(
     private functionsService: FunctionsService,
-  ) { }
+    public dialog: MatDialog,
+    private _reviewsService: ReviewsService,
+  ) {
+    this.refreshDisplayMode();
+  }
 
   ngOnInit(): void {
   }
 
-  public chx_valueChange(selectedValue: string): void{
-    if(selectedValue == 'byRating'){
-      this.displayRatingSelection = true;
-    }else{
-      this.displayRatingSelection = false;
-    console.log('salut');
+  private refreshDisplayMode(): void{
+    this.displayOptionName = "";
+    let selectedParam: string = this._reviewsService.getSelectedParameter();
+    this.nbToDisplay = parseInt(selectedParam.split(';')[1], 32);
+    switch(selectedParam.split(';')[0]){
+      case 'random':
+        this.displayOptionName = 'aléatoire';
+        break;
+      case'byRating':
+        this.displayOptionName = 'dont la note est comprise entre ' + selectedParam.split(';')[2].split(',')[0] + ' et ' + selectedParam.split(';')[2].split(',')[1];
+        break;
     }
   }
 
-  public btn_saveChanges_click(): void{
-    this.functionsService.backToGestionView();
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReviewsEditDisplayComponent, {
+      width: '500px',
+      //data: {type: 'add', news: new News()}
+    });
+
+    dialogRef.afterClosed().subscribe(data=>{
+      this.refreshDisplayMode();
+    });
+  }
+
+  public btn_editDisplayMode_click(): void{
+    this.openDialog();
   }
 }
