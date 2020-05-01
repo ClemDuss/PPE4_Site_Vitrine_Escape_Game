@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NewsService } from 'src/app/shared/services/news.service';
+import { FunctionsService } from 'src/app/shared/services/functions.service';
+import { News } from 'src/app/shared/models/news';
 
 interface newsFormat {
   date: string;
@@ -19,11 +22,25 @@ const theNews: newsFormat[] = [
 export class NewsComponent implements OnInit {
   public title: string = 'News';
 
-  public newsList: newsFormat[] = theNews;
+  public newsList: News[];
 
-  constructor() { }
+  constructor(
+    private _newsService: NewsService,
+    private _functionsService: FunctionsService,
+  ) { }
 
   ngOnInit(): void {
+    //console.log(new Date().getFullYear().toString() + '-' + new Date().getMonth().toString() + '-' + new Date().getDay().toString())
+    console.log(this._functionsService.dateToString(new Date()));
+    this.refreshNewsList();
+  }
+
+  public refreshNewsList(): void{
+    this.newsList = this._newsService.getValidateNews();
+  }
+
+  public dateToDisplay(date: Date): string{
+    return this._functionsService.dateToStringToDisplay(date);
   }
 
   public numberOfNews(): number{

@@ -181,6 +181,17 @@ export class NewsService {
     return allNewsList;
   }
 
+  public getValidateNews(): News[]{
+    let selectedsNews: News[] = [new News()];
+    this.getAllNews().forEach(element=>{
+      if(element.getActivated() && element.getEndDate() >= new Date()){
+        selectedsNews.push(element);
+      }
+    });
+    selectedsNews.shift();
+    return selectedsNews;
+  }
+
   /**
    * Retourne la news en fonction de l'id
    * @param id Id de la news à retrouver
