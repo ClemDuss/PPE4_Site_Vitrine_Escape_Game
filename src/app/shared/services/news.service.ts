@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { News } from '../models/news';
 import { Subject, Observable } from 'rxjs';
 import { newsData } from '../data/news-data';
+import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,10 @@ export class NewsService {
   private _selectedActivated: Subject<boolean> = new Subject<boolean>();
   private _selectedNews: Subject<News> = new Subject<News>();
 
-  constructor() {
+  constructor(
+    private _http: HttpClient,
+    private _apiService: ApiService,
+  ) {
     let dev_newsData = newsData;
     dev_newsData.forEach(element=>{
       this.dev_addInNewsList(element);
@@ -58,7 +64,12 @@ export class NewsService {
    * Refresh des observer
    */
   public refreshNews(): void{
-    this._lesNewsSubject.next(this._lesNews);
+    this._apiService.getAllNews().subscribe((data)=>{
+      this._lesNews = data;
+      this._lesNewsSubject.next(data);
+    });
+
+    //this._lesNewsSubject.next(this._lesNews);
     this._nombreNews.next(this._lesNews.length);
   }
 
@@ -79,14 +90,15 @@ export class NewsService {
    * @param theNews La news mopdifiée
    */
   public editNews(theNews: News): void{
-    this._lesNews.forEach(element=>{
+    /*this._lesNews.forEach(element=>{
       if(theNews.getId() == element.getId()){
         element.setTitle(theNews.getTitle());
         element.setDescription(theNews.getDescription());
         element.setStartDate(theNews.getStartDate());
         element.setEndDate(theNews.getEndDate());
       }
-    });
+    });*/
+    this._apiService.putNews(theNews);
     this.refreshNews();
   }
 
@@ -136,11 +148,12 @@ export class NewsService {
    * @param theNews La news à ajouter
    */
   public addNews(theNews: News): void{
-    theNews.setId(this.dev_setId());
+    /*theNews.setId(this.dev_setId());
     this.dev_addInNewsList(theNews);
-    this.addNewsToDB(theNews);
+    this.addNewsToDB(theNews);*/
+    this._apiService.postNews(theNews);
     this.refreshNews();
-    this._lesNewsSubject.next(this._lesNews);
+    //this._lesNewsSubject.next(this._lesNews);
   }
 
   /**
@@ -181,15 +194,23 @@ export class NewsService {
     return allNewsList;
   }
 
-  public getValidateNews(): News[]{
-    let selectedsNews: News[] = [new News()];
-    this.getAllNews().forEach(element=>{
-      if(element.getActivated() && element.getEndDate() >= new Date()){
-        selectedsNews.push(element);
-      }
+  public getValidateNews(): Observable<News[]>{
+    let selectedsNews: Subject<News[]> = new Subject<News[]>();
+    let allNewsList: News[];
+    this.refreshNews();
+    allNewsList = this._lesNews;
+    this._lesNewsSubject.subscribe((data: News[])=>{
+      let currentNewsData: News[] = [new News()]
+      data.forEach(element=>{
+        if(element.getActivated() && element.getEndDate() >= new Date()){
+          currentNewsData.push(element);
+        }
+      });
+      currentNewsData.shift();
+      selectedsNews.next(currentNewsData);
     });
-    selectedsNews.shift();
-    return selectedsNews;
+    
+    return selectedsNews.asObservable();
   }
 
   /**
