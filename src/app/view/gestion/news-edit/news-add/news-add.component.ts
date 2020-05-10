@@ -9,10 +9,8 @@ import { FunctionsService } from 'src/app/shared/services/functions.service';
 import { Subscription } from 'rxjs';
 
 export interface DialogData {
-  title: string;
-  startDate: Moment;
-  endDate: Moment;
-  description: string;
+  type: string,
+  news: News
 }
 
 @Component({
@@ -45,7 +43,7 @@ export class NewsAddComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<NewsAddComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {type: string, news: News},
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private _snackBar: MatSnackBar,
     private _newsService : NewsService,
   ) {

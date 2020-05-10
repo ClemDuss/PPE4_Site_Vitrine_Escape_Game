@@ -40,7 +40,7 @@ export class NewsComponent implements OnInit {
       this.newsList = data;
     })
     //this.newsList = this._newsService.getValidateNews();
-    //console.log(this.newsList);
+    console.log(this.newsList);
   }
 
   public dateToDisplay(date: Date): string{

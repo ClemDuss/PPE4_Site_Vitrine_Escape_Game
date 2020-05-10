@@ -20,11 +20,11 @@
               </ng-template>
             </th>
             <td>
-                <ng-template [ngIf]="element.getStartDate() == element.getEndDate()  || element.getStartDate() == null" [ngIfElse]="endDate">
-                    <i class="fas fa-long-arrow-alt-right"></i>
-                </ng-template>
-                <ng-template #endDate>
+                <ng-template [ngIf]="element.getStartDate() < element.getEndDate()" [ngIfElse]="sameDate">
                     {{functionsService.dateToStringToDisplay(element.getStartDate())}}
+                </ng-template>
+                <ng-template #sameDate>
+                    <mat-icon>arrow_right_alt</mat-icon>
                 </ng-template>
             </td>
             <td>{{ functionsService.dateToStringToDisplay(element.getEndDate()) }}</td>

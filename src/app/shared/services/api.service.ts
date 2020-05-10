@@ -4,6 +4,8 @@ import { Observable, throwError, BehaviorSubject, Subject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { News } from '../models/news';
 import { FunctionsService } from './functions.service';
+import { Room } from '../models/room';
+import { City } from '../models/city';
 
 interface apiNewsFormat{
   id;
@@ -12,6 +14,22 @@ interface apiNewsFormat{
   enddate;
   description;
   activated
+}
+
+interface apiRoomFormat{
+  id: number;
+  nom: string;
+  idville: number;
+  idthemeactuel: number;
+  heureouverture: Date;
+  heurefermeture: Date;
+  lon: number;
+  lat: number;
+}
+
+interface apiCityFormat{
+  id: number;
+  nomville: string;
 }
 
 const httpOptions= {
@@ -27,8 +45,12 @@ const httpOptions= {
 export class ApiService {
   private _baseUrlApi: string = 'http://localhost:8080/api';
   private _baseUrlApiNews: string = this._baseUrlApi + '/news';
+  private _baseUrlApiRooms: string = this._baseUrlApi + '/salles';
+  private _baseUrlApiCitys: string = this._baseUrlApi + '/villes';
 
   private _allNewsFromApi: Subject<News[]> = new Subject<News[]>();
+  private _allRoomsFromApi: Subject<Room[]> = new Subject<Room[]>();
+  private _allCitysFromApi: Subject<City[]> = new Subject<City[]>();
 
   constructor(
     private _http: HttpClient,
@@ -105,5 +127,65 @@ export class ApiService {
       '"description": "' + theNews.getDescription() + '",' +
       '"activated": ' + theNews.getActivated() + '}';
     this._http.put(this._baseUrlApiNews + '/' + theNews.getId().toString(), theNewsJson, httpOptions)
+  }
+
+
+
+  // ROOMS
+  /**
+   * Retourne toutes les salles de la base
+   */
+  public getAllRooms(): Subject<Room[]>{
+    let tableGetApi: Room[] = [new Room()];
+    let tableGetFromApi: apiRoomFormat[];
+    this._allRoomsFromApi = new Subject<Room[]>();
+    //this._http.get(this._baseUrlApi + '/news')
+    this._http.get(this._baseUrlApiRooms)
+      .subscribe((data: apiRoomFormat[])=>{
+        tableGetFromApi = data;
+        const tableLength = tableGetFromApi.length;
+        for(let i = 0; i < tableLength; i++){
+          let currentRoom = new Room();
+          currentRoom.id = tableGetFromApi[i].id;
+          currentRoom.nom = tableGetFromApi[i].nom;
+          currentRoom.idVille = tableGetFromApi[i].idville;
+          currentRoom.idThemeActuel = tableGetFromApi[i].idthemeactuel;
+          currentRoom.heureOuverture = new Date(tableGetFromApi[i].heureouverture);
+          currentRoom.heureFermeture = new Date(tableGetFromApi[i].heurefermeture);
+          currentRoom.lon = tableGetFromApi[i].lon;
+          currentRoom.lat = tableGetFromApi[i].lat;
+          tableGetApi.push(currentRoom);
+        }
+        tableGetApi.shift();
+        this._allRoomsFromApi.next(tableGetApi);
+      },
+      error => {throw error},
+      () => console.log('terminé'));
+    return this._allRoomsFromApi;
+  }
+
+
+
+  // CITY
+  public getAllCitys(): Subject<City[]>{
+    let tableGetApi: City[] = [new City()];
+    let tableGetFromApi: apiCityFormat[];
+    this._allCitysFromApi = new Subject<City[]>();
+    this._http.get(this._baseUrlApiCitys)
+      .subscribe((data: apiCityFormat[])=>{
+        tableGetFromApi = data;
+        const tableLength = tableGetFromApi.length;
+        for(let i = 0; i < tableLength; i++){
+          let currentCity = new City();
+          currentCity.id = tableGetFromApi[i].id;
+          currentCity.nomVille = tableGetFromApi[i].nomville;
+          tableGetApi.push(currentCity);
+        }
+        tableGetApi.shift();
+        this._allCitysFromApi.next(tableGetApi);
+      },
+      error => {throw error},
+      () => console.log('terminé'));
+    return this._allCitysFromApi;
   }
 }
