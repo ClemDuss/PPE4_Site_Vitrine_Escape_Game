@@ -17,6 +17,7 @@ export class UserReviewsComponent implements OnInit {
   public title: string = 'Avis';
 
   public userReviewsList: Review[];
+  public allReviews: Review[];
 
   public pictoPath: string = '../../../../assets/images/picto/Stars/';
   public emptyStar: string = this.pictoPath + 'star_empty_white.svg';
@@ -26,10 +27,17 @@ export class UserReviewsComponent implements OnInit {
   constructor(
     private _reviewsService: ReviewsService,
   ) {
-    this.userReviewsList = _reviewsService.getAllReviews();
+    //this.userReviewsList = _reviewsService.getAllReviews();
   }
 
   ngOnInit(): void {
+    this.refreshAllReviews();
+  }
+
+  private refreshAllReviews(): void{
+    this._reviewsService.getAllReviews().subscribe((allReviews: Review[])=>{
+      this.allReviews = allReviews;
+    });
   }
 
   public getNumberOfReviews(): number{

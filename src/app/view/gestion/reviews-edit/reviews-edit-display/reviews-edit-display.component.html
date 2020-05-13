@@ -11,7 +11,7 @@
             <mat-radio-button class="my-2" value="byRating" (change)="chx_option_change('byRating')">Selon la notation</mat-radio-button>
         </div>
     </mat-radio-group>
-    <div class="row" *ngIf="displayRatingSelection">
+    <div class="row" *ngIf="radio_displayMode_value.value == 'byRating'">
         <div class="col-12">Choisir la plage de notation</div>
         <div class="col-1 pt-3">De</div>
         <mat-form-field class="col-5">

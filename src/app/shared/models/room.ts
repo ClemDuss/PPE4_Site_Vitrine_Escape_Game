@@ -5,8 +5,6 @@ export class Room {
     private _idThemeActuel: number;
     private _heureOuverture: Date;
     private _heureFermeture: Date;
-    private _lon: number;
-    private _lat: number;
 
 	constructor() {
         this.id = null;
@@ -15,8 +13,6 @@ export class Room {
         this.idThemeActuel = null;
         this.heureOuverture = null;
         this.heureFermeture = null;
-        this.lon = null;
-        this.lat = null;
 	}
 
 
@@ -69,22 +65,6 @@ export class Room {
 	public get heureFermeture(): Date {
 		return this._heureFermeture;
 	}
-
-    /**
-     * Getter lon
-     * @return {number}
-     */
-	public get lon(): number {
-		return this._lon;
-	}
-
-    /**
-     * Getter lat
-     * @return {number}
-     */
-	public get lat(): number {
-		return this._lat;
-    }
     
 
     //SET
@@ -135,21 +115,5 @@ export class Room {
      */
 	public set heureFermeture(value: Date) {
 		this._heureFermeture = value;
-	}
-
-    /**
-     * Setter lon
-     * @param {number} value
-     */
-	public set lon(value: number) {
-		this._lon = value;
-	}
-
-    /**
-     * Setter lat
-     * @param {number} value
-     */
-	public set lat(value: number) {
-		this._lat = value;
 	}
 }

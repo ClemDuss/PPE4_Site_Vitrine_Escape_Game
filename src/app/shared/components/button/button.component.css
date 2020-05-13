@@ -4,7 +4,7 @@
     transition: ease 0.2s all;
 }
 
-.btn:hover{
+.btn.enable:hover{
     color: #BD0000;
     background-color: white;
 }

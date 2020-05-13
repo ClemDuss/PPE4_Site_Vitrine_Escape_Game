@@ -103,13 +103,16 @@ export class NewsService {
   }
 
   public deleteNews(id: number): void{
-    let indexToDelete: number = -1;
+    /*let indexToDelete: number = -1;
     this._lesNews.forEach(element=>{
       indexToDelete++;
       if(element.getId() == id){
         this._lesNews.splice(indexToDelete, 1);
       }
     });
+    this._selectedNews.next(null);*/
+    this._apiService.deleteNews(id);
+    this._selectedId.next(0);
     this._selectedNews.next(null);
     this.refreshNews();
   }
@@ -119,6 +122,12 @@ export class NewsService {
       if(element.getId() == id){
         element.setActivated(!element.getActivated());
       }
+    });
+    this._apiService.getNewsById(id).subscribe((data)=>{
+      data.setActivated(!data.getActivated());
+      data.setStartDate(new Date(data.getStartDate().toString().substr(0, 10)));
+      data.setEndDate(new Date(data.getEndDate().toString().substr(0, 10)));
+      this._apiService.putNews(data);
     });
   }
 

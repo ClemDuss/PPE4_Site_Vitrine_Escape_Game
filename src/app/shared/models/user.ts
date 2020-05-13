@@ -1,9 +1,37 @@
 export class User {
+    private _id: number;
     private _mail: string;
     private _prenom: string;
     private _nom: string;
 
-    constructor(mail: string = null, prenom: string = null, nom: string = null){
+    
+    public get id(): number {
+        return this._id;
+    }
+    public set id(value: number) {
+        this._id = value;
+    }
+    public get mail(): string {
+        return this._mail;
+    }
+    public set mail(value: string) {
+        this._mail = value;
+    }
+    public get prenom(): string {
+        return this._prenom;
+    }
+    public set prenom(value: string) {
+        this._prenom = value;
+    }
+    public get nom(): string {
+        return this._nom;
+    }
+    public set nom(value: string) {
+        this._nom = value;
+    }
+
+    constructor(id: number = null, mail: string = null, prenom: string = null, nom: string = null){
+        this.id = null;
         this._mail = mail;
         this._prenom = prenom;
         this._nom = nom;

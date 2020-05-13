@@ -5,6 +5,6 @@
         <div class="m-1">
             {{ room.nbSalles }} Salle<span *ngIf="room.nbSalles > 1">s</span>
         </div>
-        <button (click)="openDialog(room.idVille)"><i class="fas fa-info-circle"></i> Y aller</button>
+        <button (click)="openDialog(room.idVille, room.nomVille)"><i class="fas fa-info-circle"></i> Plus d'infos</button>
     </div>
 </div>

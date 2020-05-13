@@ -1,4 +1,4 @@
-<button type="button" class="btn" (click)="clickCusto.emit()">
+<button type="button" class="btn" [ngClass]="disabled ? '' : 'enable'" (click)="clickCusto.emit()" [disabled]="disabled">
     <mat-icon *ngIf="icon">
         {{ icon }}
     </mat-icon>

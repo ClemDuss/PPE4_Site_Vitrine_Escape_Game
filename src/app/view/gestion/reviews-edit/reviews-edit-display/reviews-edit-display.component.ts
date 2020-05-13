@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DialogData } from '../../news-edit/news-add/news-add.component';
 import { FormControl } from '@angular/forms';
 import {Validators} from '@angular/forms'
 import { FunctionsService } from 'src/app/shared/services/functions.service';
@@ -9,6 +8,14 @@ import { DisplayParametersService } from 'src/app/shared/services/display-parame
 interface Rating {
   value: string;
   displayValue: string;
+}
+
+interface DialogData{
+  DP_id: number;
+  displayOption: string;
+  nbToDisplay: number;
+  minRate: number;
+  maxRate: number;
 }
 
 @Component({
@@ -44,7 +51,10 @@ export class ReviewsEditDisplayComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private _functionsService: FunctionsService,
     private _displayParametersService: DisplayParametersService,
-  ) { }
+  ) {
+    this.radio_displayMode_value = new FormControl(data.displayOption);
+    this.input_numberToDisplay_value = new FormControl(data.nbToDisplay);
+  }
 
   ngOnInit(): void {
   }
@@ -100,10 +110,10 @@ export class ReviewsEditDisplayComponent implements OnInit {
   private saveReviewsEditChanges(): void{
     switch(this.radio_displayMode_value.value){
       case 'random':
-        this._displayParametersService.setDisplayParameterByName('reviews', 'random;' + this.input_numberToDisplay_value.value);
+        this._displayParametersService.setDisplayParameterByName(this.data.DP_id, 'reviews', 'random;' + this.input_numberToDisplay_value.value);
         break;
       case 'byRating':
-        this._displayParametersService.setDisplayParameterByName('reviews', 'byRating;' + this.input_numberToDisplay_value.value + ";" + this.select_minRate_value.value + "," + this.select_maxRate_value.value);
+        this._displayParametersService.setDisplayParameterByName(this.data.DP_id, 'reviews', 'byRating;' + this.input_numberToDisplay_value.value + ";" + this.select_minRate_value.value + "," + this.select_maxRate_value.value);
         break;
     }
     this.dialogRef.close();

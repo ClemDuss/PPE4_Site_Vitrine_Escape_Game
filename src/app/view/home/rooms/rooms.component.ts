@@ -81,10 +81,10 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  openDialog(idVille: number): void {
+  openDialog(idVille: number, nomVille: string): void {
     const dialogRef = this.dialog.open(RoomDetailsComponent, {
       width: '500px',
-      data: {idVille: idVille}
+      data: {idVille: idVille, nomVille: nomVille}
     });
   }
 }
