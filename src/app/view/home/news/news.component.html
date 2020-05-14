@@ -11,6 +11,11 @@
                         Le {{ dateToDisplay(news.getEndDate()) }}
                     </ng-template>
                 </div>
+                <div class="font-weight-bold my-1">
+                    <div class="parallelogram px-2">
+                        <div class="innerText">{{ news.getTitle() }}</div>
+                    </div>
+                </div>
                 <div class="text-justify">{{ news.getDescription() }}</div>
             </div>
         </div>

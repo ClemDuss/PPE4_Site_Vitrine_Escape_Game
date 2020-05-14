@@ -10,10 +10,10 @@
 }
 
 mat-icon{
-    position: absolute;
-    margin-left: -5px
+    margin-left: -5px;
+    vertical-align: middle;
 }
 
-.iconMove{
-    margin-left: 22px
+.content{
+    vertical-align: middle;
 }

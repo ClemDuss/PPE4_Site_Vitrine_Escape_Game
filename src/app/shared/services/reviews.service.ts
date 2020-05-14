@@ -31,7 +31,15 @@ export class ReviewsService {
     this._displayParametersService.getDisplayParameterByName('reviews').subscribe((someDP: DisplayParameters)=>{
       this._displayReviewsParameter = someDP.parameter;
     });
-    this._nbOfReviewsToDisplay = parseInt(this._displayReviewsParameter.split(';')[1], 32);
+    this._nbOfReviewsToDisplay = parseInt(this._displayReviewsParameter.split(';')[1]);
+  }
+
+  public getRateAverage(): Observable<number>{
+    let subjectAverage: Subject<number> = new Subject<number>();
+    this._apiService.getGlobalRateAverage().subscribe((average: number)=>{
+      subjectAverage.next(average);
+    });
+    return subjectAverage.asObservable();
   }
 
   public getAllReviews(): Observable<Review[]>{

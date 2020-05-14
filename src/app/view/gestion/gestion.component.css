@@ -18,3 +18,9 @@
 .card-body{
     padding-top: 135px;
 }
+
+.btn-disconnect{
+    position: absolute;
+    top:30px;
+    right: 10px
+}

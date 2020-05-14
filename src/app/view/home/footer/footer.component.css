@@ -11,3 +11,13 @@
     font-size: 50px;
     cursor: pointer;
 }
+
+.login{
+    transition: all 0.25s ease;
+}
+
+.login:hover{
+    cursor: pointer;
+    background-color: white;
+    color: #323232 !important;
+}

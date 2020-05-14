@@ -69,7 +69,7 @@ export class FunctionsService {
    */
   public openErrorSnackBar(message: string, delay: number = 2000, actionBtnContent: string = "OK", position: MatSnackBarVerticalPosition = 'top'): void{
     this._snackBar.open(message, actionBtnContent, {
-      duration: 2000,
+      duration: delay,
       verticalPosition: position,
       panelClass: ['error-snackbar']
     });
@@ -84,9 +84,13 @@ export class FunctionsService {
    */
   public openSuccessSnackBar(message: string, delay: number = 2000, actionBtnContent: string = "OK", position: MatSnackBarVerticalPosition = 'top'): void{
     this._snackBar.open(message, actionBtnContent, {
-      duration: 2000,
+      duration: delay,
       verticalPosition: position,
       panelClass: ['success-snackbar']
     });
+  }
+
+  public inactiveFunction(){
+    this.openErrorSnackBar("Fonction non disponible");
   }
 }

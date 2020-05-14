@@ -3,6 +3,8 @@ export class User {
     private _mail: string;
     private _prenom: string;
     private _nom: string;
+    private _role: string;
+    private _password: string;
 
     
     public get id(): number {
@@ -28,6 +30,18 @@ export class User {
     }
     public set nom(value: string) {
         this._nom = value;
+    }
+    public get role(): string {
+        return this._role;
+    }
+    public set role(value: string) {
+        this._role = value;
+    }
+    public get password(): string {
+        return this._password;
+    }
+    public set password(value: string) {
+        this._password = value;
     }
 
     constructor(id: number = null, mail: string = null, prenom: string = null, nom: string = null){

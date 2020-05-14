@@ -4,6 +4,7 @@ import { NewsAddComponent } from './news-add/news-add.component';
 import { Moment } from 'moment';
 import { News } from 'src/app/shared/models/news';
 import { NewsService } from 'src/app/shared/services/news.service';
+import { LoginService } from 'src/app/shared/services/login.service';
 
 @Component({
   selector: 'app-news-edit',
@@ -22,6 +23,7 @@ export class NewsEditComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private _newsService: NewsService,
+    private _loginService: LoginService,
   ) { }
 
   openDialog(): void {
@@ -33,6 +35,12 @@ export class NewsEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._loginService.isUserConnected();
+    this.setNoteBodyRightHeight();
+  }
+
+  private setNoteBodyRightHeight(){
+    document.getElementById('bodyRight').style.height = document.getElementById('content').style.height;
   }
 
 }

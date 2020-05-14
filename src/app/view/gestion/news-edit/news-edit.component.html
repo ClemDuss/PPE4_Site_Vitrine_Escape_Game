@@ -1,6 +1,21 @@
 <div class="text-white">
+    
     <app-header [welcomeText]="welcomeText" [displayBackButton]="true"></app-header>
     <div class="container">
+        <div class="row mb-2">
+            <div class="col-4 offset-4">
+                <div class="noteHead row">
+                    <div class="col-9 offset-1 top"></div>
+                    <div class="col-1 corner"></div>
+                </div>
+                <div class="noteBody row">
+                    <div class="col-9 offset-1 content text-justify" id="content">
+                        <i class="fas fa-info-circle"></i> Si le tableau n'est pas actualisé automatiquement après un ajout, une modification, une suppression ou encore une désactivation, veillez actualiser votre page.
+                    </div>
+                    <div class="col-1 bodyRight" id="bodyRight"></div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 mb-3 text-center">
                 <app-button [content]="btn_addNews_content" (clickCusto)="openDialog()"></app-button>

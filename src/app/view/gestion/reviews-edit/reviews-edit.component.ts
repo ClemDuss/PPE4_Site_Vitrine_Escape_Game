@@ -6,6 +6,7 @@ import { ReviewsEditDisplayComponent } from './reviews-edit-display/reviews-edit
 import { ReviewsService } from 'src/app/shared/services/reviews.service';
 import { DisplayParametersService } from 'src/app/shared/services/display-parameters.service';
 import { DisplayParameters } from 'src/app/shared/models/display-parameters';
+import { LoginService } from 'src/app/shared/services/login.service';
 
 interface Rating {
   value: string;
@@ -49,9 +50,11 @@ export class ReviewsEditComponent implements OnInit {
     public dialog: MatDialog,
     private _reviewsService: ReviewsService,
     private _displayParametersService: DisplayParametersService,
+    private _loginService: LoginService,
   ) { }
 
   ngOnInit(): void {
+    this._loginService.isUserConnected();
     this.btn_editDisplayMode_disable = true;
     this.refreshDisplayMode();
   }
@@ -60,7 +63,7 @@ export class ReviewsEditComponent implements OnInit {
     this._displayParametersService.getDisplayParameterByName('reviews').subscribe((someDP: DisplayParameters)=>{
       let selectedParam: string = someDP.parameter;
       this._DPid = someDP.id;
-      this.nbToDisplay = parseInt(selectedParam.split(';')[1], 32);
+      this.nbToDisplay = parseInt(selectedParam.split(';')[1]);
       this._displayOption = selectedParam.split(';')[0];
       switch(selectedParam.split(';')[0]){
         case 'random':

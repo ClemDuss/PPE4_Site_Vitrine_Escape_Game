@@ -48,7 +48,7 @@ interface apiNotesFormat{
 }
 
 interface apiUtilisateursFormat{
-  id: number;
+  id: number,
   mail: string,
   nom: string,
   prenom: string,
@@ -58,11 +58,18 @@ interface apiUtilisateursFormat{
   ville: string,
   codepostal: string,
   datenaissance: Date,
-  motdepase: string,
+  motdepasse: string,
   identifiant: string,
   tel: string,
   personnel: boolean,
   idetatcompte: string
+}
+
+interface apiInfosSupPersonnel{
+  id: number;
+  idutilisateur: string;
+  idrole: string;
+  idville: string;
 }
 
 interface apiDisplayParametersFormat{
@@ -90,6 +97,7 @@ export class ApiService {
   private _baseUrlApiNotes: string = this._baseUrlApi + '/notes';
   private _baseUrlApiUtilisateurs: string = this._baseUrlApi + '/utilisateurs';
   private _baseUrlApiDisplayParameters: string = this._baseUrlApi + '/displayparameters';
+  private _baseUrlApiInfosSupPersonnel: string = this._baseUrlApi + '/infossuppersonnels';
 
   private _allNewsFromApi: Subject<News[]> = new Subject<News[]>();
   private _allRoomsFromApi: Subject<Room[]> = new Subject<Room[]>();
@@ -170,12 +178,16 @@ export class ApiService {
   }
 
   public postNews(theNews: News): void{
+    let theStartDate: string = '';
+    theNews.getStartDate() != null ? theStartDate = this._functionsService.dateToString(theNews.getStartDate()) : theStartDate = this._functionsService.dateToString(theNews.getEndDate());
     let theNewsJson = '{' +
       '"title": "' + theNews.getTitle() + '",' +
-      '"startdate": "' + this._functionsService.dateToString(theNews.getStartDate()) + '",' +
+      '"startdate": "' + theStartDate + '",' +
       '"enddate": "' + this._functionsService.dateToString(theNews.getEndDate()) + '",' +
       '"description": "' + theNews.getDescription() + '",' +
       '"activated": ' + theNews.getActivated() + '}';
+      console.log(theNewsJson);
+      console.log(theNews)
     this._http.post(this._baseUrlApiNews, theNewsJson, httpOptions).subscribe(()=>{});
     console.log(theNewsJson);
   }
@@ -337,5 +349,63 @@ export class ApiService {
       '"parameter":"' + theDP.parameter + '"' +
       '}';
     this._http.put(this._baseUrlApiDisplayParameters + '/' + theDP.id, theDPJson, httpOptions).subscribe(()=>{});
+  }
+
+
+
+
+  // UTILISATEURS
+  public getAllUsersPersonnel(): Subject<User[]>{
+    let allUsersFromAPI: Subject<User[]> = new Subject<User[]>();
+    this._http.get(this._baseUrlApiUtilisateurs)
+      .subscribe((allUsers: apiUtilisateursFormat[])=>{
+        let newAllUsers: User[] = [];
+        allUsers.forEach((someUser: apiUtilisateursFormat)=>{
+          if(someUser.personnel){
+            let theUser: User = new User();
+            theUser.id = someUser.id;
+            theUser.nom = someUser.nom;
+            theUser.prenom = someUser.prenom;
+            theUser.mail = someUser.mail;
+            theUser.password = someUser.motdepasse;
+            newAllUsers.push(theUser);
+          }
+        });
+        allUsersFromAPI.next(newAllUsers);
+      });
+    return allUsersFromAPI;
+  }
+
+
+
+  // NOTES
+  public getGlobalRateAverage(): Subject<number>{
+    let average: Subject<number> = new Subject<number>();
+    this._http.get(this._baseUrlApiNotes)
+      .subscribe((allRates: apiNotesFormat[])=>{
+        let nbOfRates: number = 0;
+        let sumRate: number = 0;
+        allRates.forEach((someRate: apiNotesFormat)=>{
+          nbOfRates++;
+          sumRate += someRate.noteetoile;
+        });
+        average.next(sumRate/nbOfRates);
+      });
+    return average;
+  }
+
+
+
+  // INFOSSUPPERSONNEL
+  public getInfosSupPersonnelByUserId(idUser: number): Subject<string>{
+    let theRole: Subject<string> = new Subject<string>();
+    this._http.get(this._baseUrlApiInfosSupPersonnel).subscribe((allISP: apiInfosSupPersonnel[])=>{
+      allISP.forEach((someISP: apiInfosSupPersonnel) => {
+        if(parseInt(someISP.idutilisateur.split('/')[3]) == idUser){
+          theRole.next(someISP.idrole.split('/')[3]);
+        }
+      });
+    });
+    return theRole;
   }
 }

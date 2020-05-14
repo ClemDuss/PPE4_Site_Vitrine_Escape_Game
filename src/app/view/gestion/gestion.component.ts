@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/shared/services/login.service';
 
 interface editionElementsFormat {
   name: string;
@@ -22,9 +23,16 @@ export class GestionComponent implements OnInit {
 
   public editionElements: editionElementsFormat[] = editionElementsArray;
 
-  constructor() { }
+  constructor(
+    private _loginService: LoginService,
+  ) { }
 
   ngOnInit(): void {
+    this._loginService.isUserConnected();
+  }
+
+  public disconnect(){
+    this._loginService.resetLocalStorage();
   }
 
 }
