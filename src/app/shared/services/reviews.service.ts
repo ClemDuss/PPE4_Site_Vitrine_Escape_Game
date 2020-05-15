@@ -5,7 +5,6 @@ import { ReviewsData } from '../data/reviews-data';
 import { Subject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { DisplayParameters } from '../models/display-parameters';
-import { newArray } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +26,9 @@ export class ReviewsService {
     this._allReviews = ReviewsData;
   }
 
+  /**
+   * Actualise les paramètres d'affichage d'après la BDD
+   */
   private refreshDisplayReviewsParameter(): void{
     this._displayParametersService.getDisplayParameterByName('reviews').subscribe((someDP: DisplayParameters)=>{
       this._displayReviewsParameter = someDP.parameter;
@@ -34,6 +36,9 @@ export class ReviewsService {
     this._nbOfReviewsToDisplay = parseInt(this._displayReviewsParameter.split(';')[1]);
   }
 
+  /**
+   * Retourne la note moyenne des utilisateurs
+   */
   public getRateAverage(): Observable<number>{
     let subjectAverage: Subject<number> = new Subject<number>();
     this._apiService.getGlobalRateAverage().subscribe((average: number)=>{
@@ -42,6 +47,9 @@ export class ReviewsService {
     return subjectAverage.asObservable();
   }
 
+  /**
+   * Retourne tous les avis selon le paramètre d'affichage
+   */
   public getAllReviews(): Observable<Review[]>{
     let allReviewsFromApi: Subject<Review[]> = new Subject<Review[]>();
     this._displayParametersService.getAllDisplayParameters().subscribe((allDP: DisplayParameters[])=>{
@@ -52,6 +60,7 @@ export class ReviewsService {
         }
       });
       let parameter: string = reviewsParameter.getParameter().split(';')[0];
+      //Affichage selon le paramètre enregistré
       switch(parameter){
         case 'random':
           this._apiService.getAllReviews().subscribe((allReviews: Review[])=>{
@@ -109,55 +118,17 @@ export class ReviewsService {
   }
 
   // GET
+  /**
+   * Retourne le nombre d'avis à afficher
+   */
   public getNbOfReviewsToDisplay(): number{
     this.refreshDisplayReviewsParameter();
     return this._nbOfReviewsToDisplay;
   }
 
-  /*public getAllReviews(): Review[]{
-    let allReviews: Review[];
-    this.refreshDisplayReviewsParameter();
-    let parameterName: string = this._displayReviewsParameter.split(';')[0];
-    let nbOfReviewsToDisplay: number = parseInt(this._displayReviewsParameter.split(';')[1], 32);
-    if(parameterName == 'random'){
-      if(nbOfReviewsToDisplay > 0){
-        allReviews = this.getReviewsByParameter(nbOfReviewsToDisplay);
-      }
-    }
-    if(parameterName == 'byRating'){
-      if(nbOfReviewsToDisplay > 0){
-        allReviews = this.getReviewsByParameter(
-          nbOfReviewsToDisplay,
-          parseInt(this._displayReviewsParameter.split(';')[2].split(',')[0], 32),
-          parseInt(this._displayReviewsParameter.split(';')[2].split(',')[1], 32)
-        );
-      }
-    }
-    
-    return allReviews;
-  }*/
-
-  private getReviewsByParameter(nbOfReviews: number = 4, minRate: number = 0, maxRate: number = 5): Review[]{
-    let selectedsReviews: Review[] = [new Review()];
-    let continueToLoop: boolean = true;
-    let loopCount: number = 0;
-    while(continueToLoop){
-      let randomSelectedReview: Review = this._allReviews[Math.floor(Math.random() * this._allReviews.length)];
-      if(selectedsReviews.length-1 != this._allReviews.length && selectedsReviews.length <= nbOfReviews && loopCount <= 100){
-        if(!(selectedsReviews.includes(randomSelectedReview))){
-          if(minRate <= randomSelectedReview.getRate() && randomSelectedReview.getRate() <= maxRate){
-            selectedsReviews.push(randomSelectedReview);
-          }
-        }
-      }else{
-        continueToLoop = false;
-      }
-      loopCount++;
-    }
-    selectedsReviews.shift();
-    return selectedsReviews;
-  }
-
+  /**
+   * Retourne le paramètre d'affichage
+   */
   public getSelectedParameter(): string{
     this.refreshDisplayReviewsParameter();
     return this._displayReviewsParameter;

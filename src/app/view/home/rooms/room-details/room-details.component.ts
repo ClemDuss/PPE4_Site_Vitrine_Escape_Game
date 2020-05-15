@@ -34,14 +34,23 @@ export class RoomDetailsComponent implements OnInit {
     this.refreshRoomsInThisCity();
   }
 
+  /**
+   * Retourne l'id de la ville
+   */
   public get idVille(): number{
     return this._idVille;
   }
 
+  /**
+   * Retourne le nomn de la ville
+   */
   public get nomVille(): string{
     return this._nomVille;
   }
 
+  /**
+   * Actualise la liste des salles de la ville sélectionnée
+   */
   private refreshRoomsInThisCity(){
     this._roomsService.getAllRooms().subscribe((allRooms)=>{
       this.roomsInThisCity = [];
@@ -51,13 +60,6 @@ export class RoomDetailsComponent implements OnInit {
         }
       });
     });
-  }
-
-  public getGoogleMapLink(lon: number, lat: number): string{
-    let theLink: string;
-    theLink = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1386.5979697837372!2d" + lat + "!3d" + lon + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDXCsDU4JzAyLjQiTiA2wrAwNycwMS40IkU!5e0!3m2!1sfr!2sfr!4v1589179435975!5m2!1sfr!2sfr"
-    console.log(theLink);
-    return theLink;
   }
 
 }

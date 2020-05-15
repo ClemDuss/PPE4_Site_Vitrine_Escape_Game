@@ -12,6 +12,9 @@ export class UsersServiceService {
     private _apiService: ApiService,
   ) { }
 
+  /**
+   * Retourne tous les utilisateurs membres du personnel
+   */
   public getAllUsersPersonnel(): Observable<User[]>{
     let allUsersPersonnel: Subject<User[]> = new Subject<User[]>();
     this._apiService.getAllUsersPersonnel().subscribe((allUsers: User[])=>{

@@ -13,6 +13,9 @@ export class RoomsService {
     private _apiService: ApiService,
   ) { }
 
+  /**
+   * Retourne toutes les salles
+   */
   public getAllRooms(): Observable<Room[]>{
     this._apiService.getAllRooms().subscribe((data: Room[])=>{
       this._allRooms.next(data);

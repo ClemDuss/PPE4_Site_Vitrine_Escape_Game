@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { FunctionsService } from 'src/app/shared/services/functions.service';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PhotosEditDisplayComponent } from './photos-edit-display/photos-edit-display.component';
 import { DisplayParametersService } from 'src/app/shared/services/display-parameters.service';
@@ -28,8 +26,6 @@ export class PhotosEditComponent implements OnInit {
 
   constructor(
     private _loginService: LoginService,
-    private _functionsService: FunctionsService,
-    private _route: Router,
     public dialog: MatDialog,
     private _displayParametersService: DisplayParametersService,
   ) { }
@@ -65,7 +61,10 @@ export class PhotosEditComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
+  /**
+   * Ouvre la modal de modification des paramètres d'affichage
+   */
+  private openDialog(): void {
     const dialogRef = this.dialog.open(PhotosEditDisplayComponent, {
       width: '500px',
       data: {DP_id: this._DPid, displayOption: this._displayOption, nbToDisplay: this.nbToDisplay, minRate: this._minRate, maxRate: this._maxRate}
@@ -76,6 +75,9 @@ export class PhotosEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Click sur le bouton 'Modifier le mode d'affichage'
+   */
   public btn_editDisplayMode_click(): void{
     this.openDialog();
   }

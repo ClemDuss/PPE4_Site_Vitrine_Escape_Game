@@ -7,17 +7,20 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CitysService {
-  private _allCitys: Subject<City[]> = new Subject<City[]>();
 
   constructor(
     private _apiService: ApiService,
   ) { }
 
+  /**
+   * Retourne toutes les villes
+   */
   public getAllCitys(): Observable<City[]>{
+    let allCitys: Subject<City[]> = new Subject<City[]>();
     this._apiService.getAllCitys().subscribe((data)=>{
-      this._allCitys.next(data);
+      allCitys.next(data);
     });
-    return this._allCitys.asObservable();
+    return allCitys.asObservable();
   }
 
   /**

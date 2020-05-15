@@ -5,10 +5,10 @@
     </div>
     <mat-radio-group [formControl]="radio_displayMode_value" [color]="'primary'">
         <div>
-            <mat-radio-button class="my-2" value="random" (change)="chx_option_change('random')">Aléatoirement</mat-radio-button>
+            <mat-radio-button class="my-2" value="random">Aléatoirement</mat-radio-button>
         </div>
         <div>
-            <mat-radio-button class="my-2" value="byRating" (change)="chx_option_change('byRating')">Selon la notation</mat-radio-button>
+            <mat-radio-button class="my-2" value="byRating">Selon la notation</mat-radio-button>
         </div>
     </mat-radio-group>
     <div class="row" *ngIf="radio_displayMode_value.value == 'byRating'">
@@ -42,5 +42,4 @@
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>{{ btn_cancel_content }}</button>
   <button mat-button (click)="btn_valid_click()" cdkFocusInitial>{{ btn_valid_content }}</button>
-  <!--<button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ajouter</button>-->
 </div>

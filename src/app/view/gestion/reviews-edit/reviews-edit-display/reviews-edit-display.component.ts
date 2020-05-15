@@ -59,14 +59,9 @@ export class ReviewsEditDisplayComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public chx_option_change(option: string): void{
-    if(option == 'byRating'){
-      this.displayRatingSelection = true;
-    }else{
-      this.displayRatingSelection = false;
-    }
-  }
-
+  /**
+   * Click sur le bouton 'Valider les changements'
+   */
   public btn_valid_click(): void{
     if(this.radio_displayMode_value.value == null){
       this._functionsService.openErrorSnackBar("Vous devez sélectionner un mode d'affichage!", 4000)
@@ -107,6 +102,9 @@ export class ReviewsEditDisplayComponent implements OnInit {
     }
   }
 
+  /**
+   * Enregistrement des changements effectués
+   */
   private saveReviewsEditChanges(): void{
     switch(this.radio_displayMode_value.value){
       case 'random':

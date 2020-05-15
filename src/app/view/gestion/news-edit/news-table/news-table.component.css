@@ -18,6 +18,14 @@ tbody tr:hover{
     background-color: rgb(73, 73, 73) !important;
 }
 
+td{
+    vertical-align: middle;
+}
+
+mat-icon{
+    vertical-align: middle;
+}
+
 /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
     background-color: #b9b9b9;
 }

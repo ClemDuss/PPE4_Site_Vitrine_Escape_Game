@@ -31,6 +31,9 @@ export class GestionComponent implements OnInit {
     this._loginService.isUserConnected();
   }
 
+  /**
+   * déconnexion de l'utilisateur
+   */
   public disconnect(){
     this._loginService.resetLocalStorage();
   }

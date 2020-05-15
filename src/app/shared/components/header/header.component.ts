@@ -20,27 +20,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*console.log(this._activatedRoute.snapshot.data.animation);
-    switch(this._activatedRoute.snapshot.data.animation){
-      case 'Home':
-        this.welcomeText = 'Bienvenue';
-        break;
-      case 'Gestion':
-        this.welcomeText = 'Espace édition';
-        break;
-      case 'News':
-        this.welcomeText = 'Gestion des News';
-        this.displayBackButton = true;
-        break;
-      case 'Pictures':
-        this.welcomeText = 'Gestion des Photos';
-        this.displayBackButton = true;
-        break;
-      case 'Reviews':
-        this.welcomeText = 'Gestion des Avis';
-        this.displayBackButton = true;
-        break;
-    }*/
   }
 
 }

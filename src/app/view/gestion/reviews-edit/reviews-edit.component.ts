@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatRadioButton } from '@angular/material/radio';
-import { FunctionsService } from 'src/app/shared/services/functions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewsEditDisplayComponent } from './reviews-edit-display/reviews-edit-display.component';
-import { ReviewsService } from 'src/app/shared/services/reviews.service';
 import { DisplayParametersService } from 'src/app/shared/services/display-parameters.service';
 import { DisplayParameters } from 'src/app/shared/models/display-parameters';
 import { LoginService } from 'src/app/shared/services/login.service';
@@ -46,9 +43,7 @@ export class ReviewsEditComponent implements OnInit {
   private _maxRate: number = 5;
 
   constructor(
-    private functionsService: FunctionsService,
     public dialog: MatDialog,
-    private _reviewsService: ReviewsService,
     private _displayParametersService: DisplayParametersService,
     private _loginService: LoginService,
   ) { }
@@ -59,6 +54,9 @@ export class ReviewsEditComponent implements OnInit {
     this.refreshDisplayMode();
   }
 
+  /**
+   * Actualise le mode d'affichage enregistré
+   */
   private refreshDisplayMode(): void{
     this._displayParametersService.getDisplayParameterByName('reviews').subscribe((someDP: DisplayParameters)=>{
       let selectedParam: string = someDP.parameter;
@@ -83,7 +81,10 @@ export class ReviewsEditComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
+  /**
+   * Ouvre la modal de modification des paramètres d'affichage
+   */
+  private openDialog(): void {
     const dialogRef = this.dialog.open(ReviewsEditDisplayComponent, {
       width: '500px',
       data: {DP_id: this._DPid, displayOption: this._displayOption, nbToDisplay: this.nbToDisplay, minRate: this._minRate, maxRate: this._maxRate}
@@ -94,6 +95,9 @@ export class ReviewsEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Click sur le bouton de de modification des paramètres d'affichage
+   */
   public btn_editDisplayMode_click(): void{
     this.openDialog();
   }

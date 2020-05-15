@@ -15,16 +15,22 @@ export class MediasPubliesService {
     private _displayParametersService: DisplayParametersService,
   ) { }
 
+  /**
+   * Retourne tous les médias
+   */
   public getAllMedias(): Observable<MediasPublies[]>{
     let allMedias: Subject<MediasPublies[]> = new Subject<MediasPublies[]>();
     this._displayParametersService.getAllDisplayParameters().subscribe((allDP: DisplayParameters[])=>{
+      //On défini un paramètre d'affichage par défaut au cas où il y ai un problème sur la requête
       let reviewsParameter: DisplayParameters = new DisplayParameters('pictures', 'random;6');
+      //recherche du paramètre d'affichage qui correspond
       allDP.forEach((someDP: DisplayParameters) => {
         if(someDP.getDisplayName() == 'pictures'){
           reviewsParameter = someDP;
         }
       });
       let parameter: string = reviewsParameter.getParameter().split(';')[0];
+      //vérification du type d'affichage
       switch(parameter){
         case 'random':
           this._apiService.getAllMediasPublies().subscribe((allMediasFromApi: MediasPublies[])=>{

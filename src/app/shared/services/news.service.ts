@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { News } from '../models/news';
 import { Subject, Observable } from 'rxjs';
-import { newsData } from '../data/news-data';
-import { HttpClient } from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -20,14 +17,8 @@ export class NewsService {
   private _selectedNews: Subject<News> = new Subject<News>();
 
   constructor(
-    private _http: HttpClient,
     private _apiService: ApiService,
   ) {
-    let dev_newsData = newsData;
-    dev_newsData.forEach(element=>{
-      this.dev_addInNewsList(element);
-    });
-
     this._lesNews.shift();
 
     this.refreshNews();
@@ -36,7 +27,7 @@ export class NewsService {
     this._selectedNews.next(null);
   }
 
-  //OBSERVER
+  //OBSERVABLE
   public getAllNewsObserver(): Observable<News[]>{
     return this._lesNewsSubject.asObservable();
   }
@@ -68,21 +59,7 @@ export class NewsService {
       this._lesNews = data;
       this._lesNewsSubject.next(data);
     });
-
-    //this._lesNewsSubject.next(this._lesNews);
     this._nombreNews.next(this._lesNews.length);
-  }
-
-  /**
-   * Ajouter une nouvelle News à la BDD
-   * @param theNews La News à ajouter
-   */
-  private addNewsToDB(theNews: News): void{
-
-  }
-
-  private dev_addInNewsList(theNews: News): void{
-    this._lesNews.push(theNews);
   }
 
   /**
@@ -90,33 +67,25 @@ export class NewsService {
    * @param theNews La news mopdifiée
    */
   public editNews(theNews: News): void{
-    /*this._lesNews.forEach(element=>{
-      if(theNews.getId() == element.getId()){
-        element.setTitle(theNews.getTitle());
-        element.setDescription(theNews.getDescription());
-        element.setStartDate(theNews.getStartDate());
-        element.setEndDate(theNews.getEndDate());
-      }
-    });*/
     this._apiService.putNews(theNews);
     this.refreshNews();
   }
 
+  /**
+   * Supprime la news selon l'id
+   * @param id ID de la News à supprimer
+   */
   public deleteNews(id: number): void{
-    /*let indexToDelete: number = -1;
-    this._lesNews.forEach(element=>{
-      indexToDelete++;
-      if(element.getId() == id){
-        this._lesNews.splice(indexToDelete, 1);
-      }
-    });
-    this._selectedNews.next(null);*/
     this._apiService.deleteNews(id);
     this._selectedId.next(0);
     this._selectedNews.next(null);
     this.refreshNews();
   }
 
+  /**
+   * Change l'état d'activation de la news selon l'id
+   * @param id id de la news
+   */
   public changeActivatedState(id: number): void{
     this._lesNews.forEach(element=>{
       if(element.getId() == id){
@@ -132,25 +101,6 @@ export class NewsService {
   }
 
   //SET
-
-  /**
-   * Ajouter une nouvelle News
-   * @param title Titre de la News
-   * @param startDate Date de début (null si un seul jour)
-   * @param endDate Date de fin
-   * @param description Contenu de la News
-   */
-  /*public addNews(title: string, startDate: Date, endDate: Date, description: string): void{
-    let theNews: News;
-    theNews = new News();
-    theNews.setTitle(title);
-    theNews.setStartDate(startDate);
-    theNews.setEndDate(endDate);
-    theNews.setDescription(description);
-    this.dev_addInNewsList(theNews);
-    this.addNewsToDB(theNews);
-    this.refreshNews();
-  }*/
 
   /**
    * Ajouter une nouvelle News
@@ -180,17 +130,6 @@ export class NewsService {
     });
   }
 
-  private dev_setId(): number{
-    let newId: number = 0;
-    this._lesNews.forEach(element => {
-      if(element.getId() > newId){
-        newId = element.getId();
-      }
-    });
-    newId++;
-    return newId;
-  }
-
   //GET
 
   /**
@@ -203,6 +142,10 @@ export class NewsService {
     return allNewsList;
   }
 
+  /**
+   * Retourne toutes les news valide pour l'affichage.
+   * A savoir, celles qui sont active et dont la date de fin n'est pas dépassée
+   */
   public getValidateNews(): Observable<News[]>{
     let selectedsNews: Subject<News[]> = new Subject<News[]>();
     let allNewsList: News[];

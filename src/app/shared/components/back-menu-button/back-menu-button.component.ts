@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 })
 export class BackMenuButtonComponent implements OnInit {
 
+  public btn_backToMenu_content: string = "Retour au menu";
+
   constructor(
     private _route: Router,
   ) { }
@@ -15,8 +17,18 @@ export class BackMenuButtonComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Revenir au menu de gestion
+   */
   public backToMenu(): void{
     this._route.navigate(["/gestion"]);
+  }
+
+  /**
+   * Click sur le bouton de retour au menu
+   */
+  public btn_backToMenu_click(): void{
+    this.backToMenu();
   }
 
 }

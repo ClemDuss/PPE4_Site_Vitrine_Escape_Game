@@ -43,10 +43,18 @@ export class NewsTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Sélectionne la news selon son id
+   * @param id id de la news
+   */
   public selectThisNews(id: number ): void{
     this._newsService.setSelectedId(id);
   }
 
+  /**
+   * Ouvre le modal pour modifier la news selon l'id
+   * @param id id de la news
+   */
   public openEditNews(id: number): void{
     const dialogRef = this.dialog.open(NewsAddComponent, {
       width: '500px',
@@ -54,10 +62,16 @@ export class NewsTableComponent implements OnInit {
     });
   }
 
+  /**
+   * click sur le bouton supprimer
+   */
   public btn_delete_click(): void{
     this._newsService.deleteNews(this.selectedNews.getId());
   }
 
+  /**
+   * Changement d'état du switch
+   */
   public changeActivatedState(): void{
     this._newsService.changeActivatedState(this.selectedNews.getId());
   }

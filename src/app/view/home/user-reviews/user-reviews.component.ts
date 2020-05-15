@@ -29,18 +29,27 @@ export class UserReviewsComponent implements OnInit {
     this.refreshAverage();
   }
 
+  /**
+   * Actualise la moyenne de notation
+   */
   private refreshAverage(): void{
     this._reviewsService.getRateAverage().subscribe((data: number)=>{
       this.rateAverage = data;
     });
   }
 
+  /**
+   * Actualise la liste des avis à afficher
+   */
   private refreshAllReviews(): void{
     this._reviewsService.getAllReviews().subscribe((allReviews: Review[])=>{
       this.allReviews = allReviews;
     });
   }
 
+  /**
+   * Retourne le nombre d'avis à afficher
+   */
   public getNumberOfReviews(): number{
     return this.userReviewsList.length;
   }

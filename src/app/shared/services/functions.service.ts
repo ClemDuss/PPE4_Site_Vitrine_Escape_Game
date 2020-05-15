@@ -11,7 +11,8 @@ export class FunctionsService {
   ) { }
 
   /**
-   * Revenir au menu de gestion
+   * Revenir au menu de gestion. 
+   * A l'aide d'une fonction brute JS, sans les routes
    */
   public backToGestionView(){
     var getUrl = window.location;
@@ -90,6 +91,9 @@ export class FunctionsService {
     });
   }
 
+  /**
+   * Affiche une alerte "Fonction non disponible"
+   */
   public inactiveFunction(){
     this.openErrorSnackBar("Fonction non disponible");
   }

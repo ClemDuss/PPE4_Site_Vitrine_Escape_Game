@@ -3,7 +3,6 @@ import { RoomsService } from 'src/app/shared/services/rooms.service';
 import { Room } from 'src/app/shared/models/room';
 import { City } from 'src/app/shared/models/city';
 import { CitysService } from 'src/app/shared/services/citys.service';
-import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { RoomDetailsComponent } from './room-details/room-details.component';
 
@@ -12,13 +11,6 @@ interface roomsFormat {
   nomVille: string;
   nbSalles: number;
 }
-
-const rooms: roomsFormat[] = [
-  {idVille: 1, nomVille: 'Annecy', nbSalles: 4},
-  {idVille: 2, nomVille: 'Chamonix', nbSalles: 1},
-  {idVille: 3, nomVille: 'Thonon-les-Bains', nbSalles: 1},
-  {idVille: 4, nomVille: 'Bonneville', nbSalles: 1},
-]
 
 @Component({
   selector: 'app-rooms',
@@ -33,6 +25,8 @@ export class RoomsComponent implements OnInit {
   public _allRooms: Room[];
   public _allCitys: City[];
 
+  public btn_moreInformations_content: string ="Plus d'infos";
+
   constructor(
     public dialog: MatDialog,
     private _roomsService: RoomsService,
@@ -43,6 +37,9 @@ export class RoomsComponent implements OnInit {
     this.refreshRoomsList();
   }
 
+  /**
+   * Actualise la liste des Salles
+   */
   private refreshRoomsList(): void{
     this._citysService.getAllCitys().subscribe((allCitys: City[])=>{
       let newRoomsList: roomsFormat[] = [];
@@ -81,10 +78,14 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  openDialog(idVille: number, nomVille: string): void {
+  private openDialog(idVille: number, nomVille: string): void {
     const dialogRef = this.dialog.open(RoomDetailsComponent, {
       width: '500px',
       data: {idVille: idVille, nomVille: nomVille}
     });
+  }
+
+  public btn_moreInformations_click(idVille: number, nomVille: string): void{
+    this.openDialog(idVille, nomVille);
   }
 }

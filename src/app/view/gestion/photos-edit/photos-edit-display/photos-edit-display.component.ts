@@ -39,6 +39,9 @@ export class PhotosEditDisplayComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Click sur le bouton 'valider'
+   */
   public btn_valid_click(): void{
     let newNbToDisplay: number = this.input_numberToDisplay_value.value;
     if(newNbToDisplay != null){
@@ -52,8 +55,10 @@ export class PhotosEditDisplayComponent implements OnInit {
     }
   }
 
+  /**
+   * Sauvegarde des modifications du paramètre d'affichage
+   */
   private savePicturesEditChanges(): void{
-    console.log(this.data.DP_id)
     this._displayParametersService.setDisplayParameterByName(this.data.DP_id, 'pictures', 'random;' + this.input_numberToDisplay_value.value);
     this.dialogRef.close();
   }

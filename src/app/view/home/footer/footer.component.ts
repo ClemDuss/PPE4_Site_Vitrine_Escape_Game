@@ -2,9 +2,7 @@ import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from 'src/app/shared/components/login-dialog/login-dialog.component';
 import { Router } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { FunctionsService } from 'src/app/shared/services/functions.service';
 
 @Component({
   selector: 'app-footer',
@@ -13,6 +11,7 @@ import { FunctionsService } from 'src/app/shared/services/functions.service';
 })
 export class FooterComponent implements OnInit {
   private actualDate = new Date();
+  //Définition du texte de copyright avec année automatique
   public copyText: string = '© CJT-' + this.actualDate.getFullYear();
 
   windowScrolled: boolean;
@@ -21,14 +20,15 @@ export class FooterComponent implements OnInit {
     public dialog: MatDialog,
     private _route: Router,
     private _loginService: LoginService,
-    private _functionsService: FunctionsService,
-    @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit(): void {
   }
 
-  public goToGestion(): void{
+  /**
+   * Click sur le boutn d'accès à l'espace gestion
+   */
+  public btn_goToGestion_click(): void{
     if(this._loginService.userCanGoToGestion()){
       this._route.navigate(['/gestion']);
     }else{
@@ -36,7 +36,10 @@ export class FooterComponent implements OnInit {
     }
   }
 
-  public openDialog(){
+  /**
+   * Ouverture de la modal de connexion
+   */
+  private openDialog(): void{
     const dialogRef = this.dialog.open(LoginDialogComponent,{
       width: '300px',
       data: {email: null, password: null, validConnection: false},
@@ -51,6 +54,9 @@ export class FooterComponent implements OnInit {
     });
   }
 
+  /**
+   * Différents paramètres pour l'annimation du scroll au haut de page
+   */
   @HostListener("window:scroll")
     onWindowScroll() {
         if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
@@ -60,6 +66,7 @@ export class FooterComponent implements OnInit {
             this.windowScrolled = false;
         }
     }
+    //Revenir au haut de page
     scrollToTop() {
         (function smoothscroll() {
             var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;

@@ -1,5 +1,4 @@
 <div class="text-white">
-    
     <app-header [welcomeText]="welcomeText" [displayBackButton]="true"></app-header>
     <div class="container">
         <div class="row mb-2">
@@ -18,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col-12 mb-3 text-center">
-                <app-button [content]="btn_addNews_content" (clickCusto)="openDialog()"></app-button>
+                <app-button [content]="btn_addNews_content" (clickCusto)="btn_addNews_click()"></app-button>
             </div>
         </div>
         <app-news-table></app-news-table>

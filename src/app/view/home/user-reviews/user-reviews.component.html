@@ -2,10 +2,9 @@
     <div *ngIf="allReviews.length > 0 && allReviews != null">
         <app-sections-title [content]="title"></app-sections-title>
         <div *ngIf="rateAverage" class="text-center">
-            <!--<i class="fas fa-star-half-alt"></i>-->
             <div>Moyenne donnée par nos clients</div>
-            <div>
-                <span class="font-weight-bold bg-white rounded px-1 average">
+            <div class="mt-2">
+                <span class="font-weight-bold bg-white rounded py-1 px-2 average">
                     {{ rateAverage }} / 5
                 </span>
             </div>
