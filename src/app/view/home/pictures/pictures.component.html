@@ -1,0 +1,17 @@
+<div *ngIf="allPictures != undefined">
+    <div *ngIf="allPictures.length > 0 && allPictures != null">
+        <app-sections-title [content]="title"></app-sections-title>
+        <div class="row">
+            <div class="col-md-4 col-sm-12 text-center mt-2 mb-2" *ngFor="let pic of allPictures, index as i"
+                [ngClass]="(allPictures.length % 3 != 0 && i == allPictures.length - 1 && (allPictures.length % 7 == 0 || allPictures.length % 4 == 0 && allPictures.length<=4)) || (allPictures.length == 1) ? 'col-lg-4 offset-lg-4 col-md-12' :
+                            (allPictures.length % 3 != 0 && (allPictures.length % 5 == 0 || allPictures.length % 2 == 0) && i == allPictures.length-2) || (allPictures.length == 2 && i == 0) ? 'col-lg-4 offset-lg-2 col-md-12' : 'col-lg-4 col-md-12'">
+                <img [src]="picsFolder + pic.media" width="100%">
+            </div>
+        </div>
+        <!--<div class="row">
+            <div class="col-md-4 col-sm-12 text-center mt-2 mb-2" *ngFor="let pic of pictures">
+                <div class="image text-center" [style]="'background-image:url(' + picsFolder + pic + ')'"><img [src]="picsFolder + pic" alt="" /></div>
+            </div>
+        </div>-->
+    </div>
+</div>

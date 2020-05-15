@@ -1,0 +1,10 @@
+<app-sections-title [content]="title"></app-sections-title>
+<div class="row">
+    <div class="col-md-3 col-sm-6 text-center mt-3 mb-3" *ngFor="let room of roomsList">
+        <div>{{ room.nomVille }}</div>
+        <div class="m-1">
+            {{ room.nbSalles }} Salle<span *ngIf="room.nbSalles > 1">s</span>
+        </div>
+        <button (click)="btn_moreInformations_click(room.idVille, room.nomVille)"><i class="fas fa-info-circle"></i> {{ btn_moreInformations_content }}</button>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+/*.image {
+    background-size: cover;
+    width: 100%;
+    height: calc(attr(width) * 3 / 4);
+}
+
+.image img {
+display: none;
+}
+/*https://www.tiloweb.com/css/redimensionner-rogner-des-images-en-css*/

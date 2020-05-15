@@ -1,0 +1,26 @@
+.noteHead .top{
+    background-color: wheat;
+    height: 20px;
+    width: 100%;
+}
+
+/* option du triangle trouvée sur w3school : https://www.w3schools.com/howto/howto_css_shapes.asp */
+.noteHead .corner{
+    width: 0;
+    height: 0;
+	border-top: 20px solid transparent;
+	border-left: 20px solid rgb(190, 171, 134);
+}
+
+.noteBody .content{
+    background-color: wheat;
+    color: #bd0000;
+    padding-bottom: 18px;
+    padding-right: 5px;
+}
+
+.noteBody .bodyRight{
+    padding: 0 !important;
+    max-width: 20px;
+    background-color: wheat;
+}

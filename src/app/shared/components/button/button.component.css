@@ -1,0 +1,19 @@
+.btn{
+    color: white;
+    border: solid 1px white;
+    transition: ease 0.2s all;
+}
+
+.btn.enable:hover{
+    color: #BD0000;
+    background-color: white;
+}
+
+mat-icon{
+    margin-left: -5px;
+    vertical-align: middle;
+}
+
+.content{
+    vertical-align: middle;
+}

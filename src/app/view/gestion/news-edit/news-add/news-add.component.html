@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{ dialogTitle }}</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <mat-form-field class="col-12">
+      <mat-label>{{ input_title_content }}</mat-label>
+      <input matInput [formControl]="input_title_value">
+    </mat-form-field>
+    <mat-form-field class="col-6">
+      <mat-label>{{ datepicker_start_content }}</mat-label>
+      <input matInput [formControl]="datepicker_start_value" [matDatepicker]="pickerStart">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="col-6">
+      <mat-label>{{ datepicker_end_content }}</mat-label>
+      <input matInput [formControl]="datepicker_end_value" [matDatepicker]="pickerEnd">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+      <mat-label>{{ input_description_content }}</mat-label>
+      <textarea matInput [formControl]="input_description_value" [placeholder]="input_description_placeholder"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{ btn_cancel_content }}</button>
+  <button mat-button (click)="btn_validate_click()" cdkFocusInitial>{{ btn_validate_content }}</button>
+</div>

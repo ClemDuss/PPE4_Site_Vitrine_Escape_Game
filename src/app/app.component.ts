@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { slideInAnimation } from "./route-animation";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [ slideInAnimation ]
 })
 export class AppComponent {
-  title = 'PPE-Site-Vitrine-escape-game';
+  title = 'test';
 }

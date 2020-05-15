@@ -1,0 +1,17 @@
+<h1 mat-mat-dialog-title class="text-center">Connexion</h1>
+<mat-dialog-content>
+    <form class="row">
+        <mat-form-field class="col-12">
+            <mat-label>Adresse email</mat-label>
+            <input matInput placeholder="exemple@me.com" type="email" [formControl]="input_email_value">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" [formControl]="input_password_value">
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button matDialogClose [color]="'error'">Annuler</button>
+    <button mat-button (click)="btn_login_click()" [color]="'success'">Connexion</button>
+</mat-dialog-actions>

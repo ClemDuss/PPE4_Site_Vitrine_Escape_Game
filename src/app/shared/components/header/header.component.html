@@ -1,0 +1,13 @@
+<header class="text-center mb-5 text-white">
+    <div class="logo">
+        <a [routerLink]="['']">
+            <img [src]="logo" class="mw-100 m-4">
+        </a>
+    </div>
+    <div class="welcome" *ngIf="welcomeText && welcomeText != ''">
+        <span class="line-left"></span>
+        <span class="m-1">{{ welcomeText }}</span>
+        <span class="line-right"></span>
+    </div>
+    <app-back-menu-button *ngIf="displayBackButton"></app-back-menu-button>
+</header>

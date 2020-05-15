@@ -1,0 +1,31 @@
+h2{
+    font-size: 30px;
+}
+
+.divider-top .left{
+    width: 0;
+    height: 0;
+	border-top: 2px solid transparent;
+	border-right: 200px solid white;
+}
+
+.divider-top .right{
+    width: 0;
+    height: 0;
+	border-top: 2px solid transparent;
+	border-left: 200px solid white;
+}
+
+.divider-bottom .left{
+    width: 0;
+    height: 0;
+	border-bottom: 2px solid transparent;
+	border-right: 200px solid white;
+}
+
+.divider-bottom .right{
+    width: 0;
+    height: 0;
+	border-bottom: 2px solid transparent;
+	border-left: 200px solid white;
+}

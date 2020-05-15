@@ -1,0 +1,35 @@
+table{
+    color: white;
+}
+
+thead{
+    background-color: white;
+    color: #bd0000;
+}
+
+tbody tr:hover{
+    cursor: pointer;
+    background-color: rgb(197, 197, 197);
+    color: #bd0000;
+    transition: all 0.2s ease;
+}
+
+.selected, .selected:hover{
+    background-color: rgb(73, 73, 73) !important;
+}
+
+td{
+    vertical-align: middle;
+}
+
+mat-icon{
+    vertical-align: middle;
+}
+
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #b9b9b9;
+}
+
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: white;
+}

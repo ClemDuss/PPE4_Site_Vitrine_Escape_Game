@@ -1,0 +1,23 @@
+.goToTop{
+    height: 50px;
+}
+
+.goToTop i{
+    font-size: 40px;
+    transition: ease 0.1s all;
+}
+
+.goToTop i:hover{
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.login{
+    transition: all 0.25s ease;
+}
+
+.login:hover{
+    cursor: pointer;
+    background-color: white;
+    color: #323232 !important;
+}

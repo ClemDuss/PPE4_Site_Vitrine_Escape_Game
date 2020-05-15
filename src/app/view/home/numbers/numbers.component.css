@@ -1,0 +1,27 @@
+.parallelogram {
+	width: 100%;
+	height: 100%;
+	transform: skew(-20deg);
+	background: white;
+    color: #bd0000;
+    padding-top: 1px;
+}
+
+.parallelogram .innerText{
+    transform: skew(20deg) !important;
+}
+
+.bigNumber{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.litleTitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.openDays{
+    letter-spacing: 4px;
+}

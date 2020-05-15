@@ -1,0 +1,28 @@
+<div *ngIf="allReviews != undefined">
+    <div *ngIf="allReviews.length > 0 && allReviews != null">
+        <app-sections-title [content]="title"></app-sections-title>
+        <div *ngIf="rateAverage" class="text-center">
+            <div>Moyenne donnée par nos clients</div>
+            <div class="mt-2">
+                <span class="font-weight-bold bg-white rounded py-1 px-2 average">
+                    {{ rateAverage }} / 5
+                </span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div *ngFor="let review of allReviews, index as i" class="mt-3 mb-3"
+            [ngClass]="(allReviews.length % 3 != 0 && i == allReviews.length - 1 && (allReviews.length % 7 == 0 || allReviews.length % 4 == 0 && allReviews.length<=4)) || (allReviews.length == 1) ? 'col-lg-4 offset-lg-4 col-md-12' :
+                        (allReviews.length % 3 != 0 && (allReviews.length % 5 == 0 || allReviews.length % 2 == 0) && i == allReviews.length-2) || (allReviews.length == 2 && i == 0) ? 'col-lg-4 offset-lg-2 col-md-12' : 'col-lg-4 col-md-12'">
+                <div class="border border-light rounded py-2 px-2">
+                    <div class="font-weight-bold">
+                        {{ review.getUser().getPrenom() }} {{ review.getUser().getNom().substr(0,1).toUpperCase() }}.
+                        <app-reviews-stars [rating]="review.getRate()"></app-reviews-stars>
+                    </div>
+                    <div class="text-justify">
+                        {{ review.getComment() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+img{
+    width: 500px;
+    max-width: 90%;
+}
+
+.welcome{
+    margin-top: -15px;
+}
+
+/*.welcome .line{
+    height: 2px;
+    width: 40px;
+    background-color: white;
+    position: absolute;
+    margin-top: 8px;
+}*/
+
+.welcome .line-right{
+    height: 0px;
+    width: 0px;
+    position: absolute;
+    margin-top: 8px;
+	border-top: 2px solid transparent;
+	border-left: 80px solid white;
+	border-bottom: 2px solid transparent;
+}
+
+.welcome .line-left{
+    height: 0px;
+    width: 0px;
+    position: absolute;
+    margin-top: 8px;
+	border-top: 2px solid transparent;
+	border-right: 80px solid white;
+	border-bottom: 2px solid transparent;
+    margin-left: -80px;
+}

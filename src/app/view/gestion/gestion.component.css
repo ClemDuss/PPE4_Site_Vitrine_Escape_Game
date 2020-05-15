@@ -1,0 +1,26 @@
+.card{
+    background-color: #BD0000;
+    transition: ease 0.2s all;
+    height: 300px;
+    font-size: 50px;
+    margin-top: 50%;
+}
+
+.material-icons{
+    font-size: 50px;
+}
+
+.card:hover{
+    background-color: whitesmoke;
+    color: #BD0000 !important;
+}
+
+.card-body{
+    padding-top: 135px;
+}
+
+.btn-disconnect{
+    position: absolute;
+    top:30px;
+    right: 10px
+}

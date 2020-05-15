@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="text-center">{{ nomVille }}</h1>
+<h3 mat-dialog-title class="text-center" *ngIf="roomsInThisCity.length > 0">{{ roomsInThisCity.length }} Salle<span *ngIf="roomsInThisCity.length > 1">s</span></h3>
+<div mat-dialog-content>
+    <div *ngFor="let room of roomsInThisCity" class="row">
+        <div class="col-6 offset-3 my-3 mt-0 rooms-separator"></div>
+        <div class="col-12 text-center">
+            <span class="font-weight-bold">Salle :</span> {{ room.nom }}
+        </div>
+        <div class="row col-6 offset-3 mt-2">
+            <div class="col-6 text-center">
+                <div>Ouverture</div>
+                <div class="text-success"><i class="far fa-clock"></i> {{ room.heureOuverture.getHours() }}h{{ room.heureOuverture.getMinutes() != 0 ? room.heureOuverture.getMinutes() : '' }}</div>
+            </div>
+            <div class="col-6 text-center">
+                <div>Fermeture</div>
+                <div class="text-danger"><i class="far fa-clock"></i> {{ room.heureFermeture.getHours() }}h{{ room.heureFermeture.getMinutes() != 0 ? room.heureFermeture.getMinutes() : '' }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 offset-3 my-3 mb-0 rooms-separator"></div>
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button mat-button matDialogClose [color]="'error'">{{ btn_close_content }}</button>
+</div>

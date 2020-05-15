@@ -1,0 +1,27 @@
+<div class="text-white">
+    <app-header [welcomeText]="welcomeText" [displayBackButton]="true"></app-header>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3 text-center align-content-center">
+                <div class="title">
+                    Mode d'affichage des avis actuel :
+                </div>
+                <table class="my-4 mx-auto border-top border-bottom border-light">
+                    <tr>
+                        <td class="text-right">Type d'affichage</td>
+                        <td><mat-icon>arrow_right_alt</mat-icon></td>
+                        <td class="text-left">{{ displayOptionName }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Nombres d'avis à afficher</td>
+                        <td><mat-icon>arrow_right_alt</mat-icon></td>
+                        <td class="text-left">{{ nbToDisplay }} avis</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <app-button [icon]="btn_editDisplayMode_icon" [disabled]="btn_editDisplayMode_disable" [content]="btn_editDisplayMode_content" (clickCusto)="btn_editDisplayMode_click()"></app-button>
+        </div>
+    </div>
+</div>
