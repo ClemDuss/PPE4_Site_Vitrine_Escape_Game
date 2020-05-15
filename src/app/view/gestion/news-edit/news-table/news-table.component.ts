@@ -28,19 +28,30 @@ export class NewsTableComponent implements OnInit {
     public functionsService: FunctionsService,
     public dialog: MatDialog,
   ) {
-    this._subscriptionAllNews = _newsService.getAllNewsObserver().subscribe((newsList)=>{
-      this.allNews = newsList;
-    });
-    this._subscriptionSelectedId = _newsService.getSelectedId().subscribe((theSelectedId)=>{
-      this.selectedId = theSelectedId;
-    });
-    this._subscriptionSelectedNews = _newsService.getSelectedNews().subscribe((data)=>{
-      this.selectedNews = data;
-    });
     let lauchNewsService = _newsService.getAllNews();
   }
 
   ngOnInit(): void {
+    this.refreshTableDisplay();
+  }
+
+  /**
+   * Actualise l'affichage du tableau
+   */
+  private refreshTableDisplay(): void{
+    this.refreshAllNews();
+    this._subscriptionSelectedId = this._newsService.getSelectedId().subscribe((theSelectedId)=>{
+      this.selectedId = theSelectedId;
+    });
+    this._subscriptionSelectedNews = this._newsService.getSelectedNews().subscribe((data)=>{
+      this.selectedNews = data;
+    });
+  }
+
+  private refreshAllNews(): void{
+    this._subscriptionAllNews = this._newsService.getAllNewsObserver().subscribe((newsList)=>{
+      this.allNews = newsList;
+    });
   }
 
   /**
@@ -60,6 +71,10 @@ export class NewsTableComponent implements OnInit {
       width: '500px',
       data: {type: 'edit', news: this.selectedNews}
     });
+
+    dialogRef.afterClosed().subscribe(()=>{
+      this.refreshAllNews();
+    });
   }
 
   /**
@@ -67,6 +82,7 @@ export class NewsTableComponent implements OnInit {
    */
   public btn_delete_click(): void{
     this._newsService.deleteNews(this.selectedNews.getId());
+    this.refreshAllNews();
   }
 
   /**
@@ -74,6 +90,7 @@ export class NewsTableComponent implements OnInit {
    */
   public changeActivatedState(): void{
     this._newsService.changeActivatedState(this.selectedNews.getId());
+    this.refreshAllNews();
   }
 
   ngOnDestroy(): void{

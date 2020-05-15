@@ -141,8 +141,8 @@ export class ApiService {
         tableGetApi.shift();
         allNewsFromApi.next(tableGetApi);
       },
-      error => {throw error},
-      () => console.log('terminé'));
+      error => {/*throw error*/},
+      () => {});
     return allNewsFromApi;
   }
 
@@ -180,10 +180,7 @@ export class ApiService {
       '"enddate": "' + this._functionsService.dateToString(theNews.getEndDate()) + '",' +
       '"description": "' + theNews.getDescription() + '",' +
       '"activated": ' + theNews.getActivated() + '}';
-      console.log(theNewsJson);
-      console.log(theNews)
     this._http.post(this._baseUrlApiNews, theNewsJson, httpOptions).subscribe(()=>{});
-    console.log(theNewsJson);
   }
 
   /**
@@ -237,8 +234,8 @@ export class ApiService {
         tableGetApi.shift();
         allRoomsFromApi.next(tableGetApi);
       },
-      error => {throw error},
-      () => console.log('terminé'));
+      error => {/*throw error*/},
+      () => {});
     return allRoomsFromApi;
   }
 
@@ -281,8 +278,8 @@ export class ApiService {
         tableGetApi.shift();
         allCitysFromApi.next(tableGetApi);
       },
-      error => {throw error},
-      () => console.log('terminé'));
+      error => {/*throw error*/},
+      () => {});
     return allCitysFromApi;
   }
 
