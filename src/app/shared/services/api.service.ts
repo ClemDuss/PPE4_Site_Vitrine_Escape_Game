@@ -366,6 +366,7 @@ export class ApiService {
       .subscribe((allDP: apiDisplayParametersFormat[])=>{
         allDP.forEach((someDP: apiDisplayParametersFormat) => {
           if(someDP.displayname == name){
+            console.log(someDP)
             let currentDP: DisplayParameters = new DisplayParameters();
             currentDP.id = someDP.id;
             currentDP.displayName = someDP.displayname;
