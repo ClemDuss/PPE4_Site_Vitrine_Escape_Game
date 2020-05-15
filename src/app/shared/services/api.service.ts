@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject, Subject } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, throwError, Subject } from 'rxjs';
 import { News } from '../models/news';
 import { FunctionsService } from './functions.service';
 import { Room } from '../models/room';
@@ -9,6 +8,7 @@ import { City } from '../models/city';
 import { Review } from '../models/review';
 import { User } from '../models/user';
 import { DisplayParameters } from '../models/display-parameters';
+import { MediasPublies } from '../models/medias-publies';
 
 interface apiNewsFormat{
   id;
@@ -78,6 +78,13 @@ interface apiDisplayParametersFormat{
   parameter: string
 }
 
+interface apiMediasPubliesFormat{
+  id: number,
+  typemedia: string,
+  media: string,
+  idpublication: string,
+}
+
 const httpOptions= {
   headers: new HttpHeaders({
     'accept': 'application/json',
@@ -98,6 +105,7 @@ export class ApiService {
   private _baseUrlApiUtilisateurs: string = this._baseUrlApi + '/utilisateurs';
   private _baseUrlApiDisplayParameters: string = this._baseUrlApi + '/displayparameters';
   private _baseUrlApiInfosSupPersonnel: string = this._baseUrlApi + '/infossuppersonnels';
+  private _baseUrlApiMediasPublies: string = this._baseUrlApi + '/mediaspublies';
 
   private _allNewsFromApi: Subject<News[]> = new Subject<News[]>();
   private _allRoomsFromApi: Subject<Room[]> = new Subject<Room[]>();
@@ -430,7 +438,10 @@ export class ApiService {
           nbOfRates++;
           sumRate += someRate.noteetoile;
         });
-        average.next(sumRate/nbOfRates);
+        //Afin d'arrondir à deux décimal
+        var precision = precision || 2;
+        var tmp = Math.pow(10, precision);
+        average.next(Math.round((sumRate/nbOfRates) * tmp) / tmp);
       });
     return average;
   }
@@ -448,5 +459,24 @@ export class ApiService {
       });
     });
     return theRole;
+  }
+
+
+
+  // MEDIAS PUBLIES
+  public getAllMediasPublies(): Subject<MediasPublies[]>{
+    let allMediasPublies: Subject<MediasPublies[]> = new Subject<MediasPublies[]>();
+    this._http.get(this._baseUrlApiMediasPublies)
+      .subscribe((allMP: apiMediasPubliesFormat[])=>{
+        let newAllMP: MediasPublies[] = [];
+        allMP.forEach((someMP: apiMediasPubliesFormat)=>{
+          let theMP: MediasPublies = new MediasPublies;
+          theMP.id = someMP.id;
+          theMP.media = someMP.media;
+          newAllMP.push(theMP);
+        });
+        allMediasPublies.next(newAllMP);
+      });
+    return allMediasPublies;
   }
 }

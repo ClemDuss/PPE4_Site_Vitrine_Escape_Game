@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MediasPublies } from 'src/app/shared/models/medias-publies';
+import { MediasPubliesService } from 'src/app/shared/services/medias-publies.service';
 
 const picturesFolder: string = './../../../../assets/images/pictures/UserPics/';
 
@@ -22,9 +24,20 @@ export class PicturesComponent implements OnInit {
   public picsFolder: string = picturesFolder;
   public pictures: string[] = pics;
 
-  constructor() { }
+  public allPictures: MediasPublies[];
+
+  constructor(
+    private _mediasPubliesService: MediasPubliesService,
+  ) { }
 
   ngOnInit(): void {
+    this.refreshAllPictures();
+  }
+
+  private refreshAllPictures(): void{
+    this._mediasPubliesService.getAllMedias().subscribe((allMedias: MediasPublies[])=>{
+      this.allPictures = allMedias;
+    });
   }
 
 }

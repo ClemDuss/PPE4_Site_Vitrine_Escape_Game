@@ -2,12 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ReviewsService } from 'src/app/shared/services/reviews.service';
 import { Review } from 'src/app/shared/models/review';
 
-interface reviewsFormat{
-  username: string;
-  rating: number;
-  comment: string;
-}
-
 @Component({
   selector: 'app-user-reviews',
   templateUrl: './user-reviews.component.html',
