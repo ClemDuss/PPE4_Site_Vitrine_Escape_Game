@@ -239,6 +239,19 @@ export class ApiService {
     return this._allRoomsFromApi;
   }
 
+  public countAllRooms(): Observable<number>{
+    let countAllRooms: Subject<number> = new Subject<number>();
+    this._http.get(this._baseUrlApiRooms)
+      .subscribe((allRooms: apiRoomFormat[])=>{
+        let count: number = 0;
+        allRooms.forEach((someRoom: apiRoomFormat)=>{
+          count++;
+        });
+        countAllRooms.next(count);
+      });
+    return countAllRooms.asObservable();
+  }
+
 
 
   // CITY
@@ -262,6 +275,19 @@ export class ApiService {
       error => {throw error},
       () => console.log('terminé'));
     return this._allCitysFromApi;
+  }
+
+  public countAllCitys(): Observable<number>{
+    let countAllCitys: Subject<number> = new Subject<number>();
+    this._http.get(this._baseUrlApiCitys)
+      .subscribe((allCitys: apiCityFormat[])=>{
+        let count: number = 0;
+        allCitys.forEach(() => {
+          count++;
+        });
+        countAllCitys.next(count);
+      });
+    return countAllCitys.asObservable();
   }
 
 
@@ -374,6 +400,21 @@ export class ApiService {
         allUsersFromAPI.next(newAllUsers);
       });
     return allUsersFromAPI;
+  }
+
+  public countAllUsers(): Observable<number>{
+    let countAllUsers: Subject<number> = new Subject<number>();
+    this._http.get(this._baseUrlApiUtilisateurs)
+      .subscribe((allUsers: apiUtilisateursFormat[])=>{
+        let count: number = 0;
+        allUsers.forEach((someUser: apiUtilisateursFormat)=>{
+          if(!someUser.personnel){
+            count++;
+          }
+        });
+        countAllUsers.next(count);
+      });
+    return countAllUsers.asObservable();
   }
 
 
