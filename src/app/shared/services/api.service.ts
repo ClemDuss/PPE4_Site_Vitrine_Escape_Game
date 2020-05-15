@@ -9,6 +9,7 @@ import { Review } from '../models/review';
 import { User } from '../models/user';
 import { DisplayParameters } from '../models/display-parameters';
 import { MediasPublies } from '../models/medias-publies';
+import { ApiUrl } from '../../../assets/API/api-url';
 
 //création d'interface correspondant au format de l'API pour récupérer efficacement les données en GET
 interface apiNewsFormat{
@@ -98,7 +99,7 @@ const httpOptions= {
 })
 export class ApiService {
   //URL d'accès à l'API
-  private _baseUrlApi: string = 'http://localhost:8081/api';
+  private _baseUrlApi: string = ApiUrl;
 
   //URLs pour accéder aux différentes 'tables' dans l'API
   private _baseUrlApiNews: string = this._baseUrlApi + '/news';
