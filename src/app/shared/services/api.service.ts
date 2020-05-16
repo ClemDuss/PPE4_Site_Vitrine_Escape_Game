@@ -314,10 +314,10 @@ export class ApiService {
         allPosts.forEach(somePost => {
           let someReview: Review = new Review();
           someReview.user = new User();
-          someReview.user.id = parseInt(somePost.idutilisateur.split('/')[3]);
+          someReview.user.id = parseInt(somePost.idutilisateur.split('/')[somePost.idutilisateur.split('/').length-1]);
           someReview.date = somePost.datepublication;
           someReview.comment = somePost.commentaire;
-          someReview.idPartie = parseInt(somePost.idpartie.split('/')[3]);
+          someReview.idPartie = parseInt(somePost.idpartie.split('/')[somePost.idpartie.split('/').length-1]);
           tableGetApi.push(someReview);
         });
         this._http.get(this._baseUrlApiNotes)
@@ -326,7 +326,7 @@ export class ApiService {
             //Association de la note avec une publication selon l'id de la partie
             tableGetApi.forEach((someReview: Review)=>{
               allRates.forEach((someRate: apiNotesFormat) => {
-                if(parseInt(someRate.idpartie.split('/')[3]) == someReview.idPartie){
+                if(parseInt(someRate.idpartie.split('/')[someRate.idpartie.split('/').length-1]) == someReview.idPartie){
                   someReview.rate = someRate.noteetoile;
                 }
               });
@@ -487,8 +487,8 @@ export class ApiService {
     let theRole: Subject<string> = new Subject<string>();
     this._http.get(this._baseUrlApiInfosSupPersonnel).subscribe((allISP: apiInfosSupPersonnel[])=>{
       allISP.forEach((someISP: apiInfosSupPersonnel) => {
-        if(parseInt(someISP.idutilisateur.split('/')[3]) == idUser){
-          theRole.next(someISP.idrole.split('/')[3]);
+        if(parseInt(someISP.idutilisateur.split('/')[someISP.idutilisateur.split('/').length-1]) == idUser){
+          theRole.next(someISP.idrole.split('/')[someISP.idrole.split('/').length-1]);
         }
       });
     });
