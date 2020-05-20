@@ -14,6 +14,9 @@ export class FooterComponent implements OnInit {
   //Définition du texte de copyright avec année automatique
   public copyText: string = '© CJT-' + this.actualDate.getFullYear();
 
+  private _logoFolderPath: string = "./../../../../assets/images/logos"
+  public footerLogo: string = this._logoFolderPath + "/logo_escape_game_white.svg";
+
   windowScrolled: boolean;
 
   constructor(
