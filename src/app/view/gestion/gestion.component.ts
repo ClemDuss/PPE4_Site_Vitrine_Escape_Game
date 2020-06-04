@@ -11,6 +11,7 @@ const editionElementsArray: editionElementsFormat[] = [
   { name: 'Avis', path: './avis'},
   { name: 'News', path: './news', icon: 'fiber_new'},
   { name: 'Photos', path: './photos'},
+  { name: 'Podium', path: './podium'},
 ]
 
 @Component({

@@ -46,6 +46,7 @@ import { ReviewsStarsComponent } from './view/home/user-reviews/reviews-stars/re
 import { RoomDetailsComponent } from './view/home/rooms/room-details/room-details.component';
 import { LoginDialogComponent } from './shared/components/login-dialog/login-dialog.component';
 import { PhotosEditDisplayComponent } from './view/gestion/photos-edit/photos-edit-display/photos-edit-display.component';
+import { PodiumComponent } from './view/gestion/podium/podium.component';
 
 export const MY_FORMAT: MatDateFormats = {
   parse: {
@@ -84,6 +85,7 @@ export const MY_FORMAT: MatDateFormats = {
     RoomDetailsComponent,
     LoginDialogComponent,
     PhotosEditDisplayComponent,
+    PodiumComponent,
   ],
   imports: [
     BrowserModule,

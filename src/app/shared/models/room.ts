@@ -5,6 +5,7 @@ export class Room {
     private _idThemeActuel: number;
     private _heureOuverture: Date;
     private _heureFermeture: Date;
+    private _afficherclassement: boolean;
 
 	constructor() {
         this.id = null;
@@ -65,6 +66,14 @@ export class Room {
 	public get heureFermeture(): Date {
 		return this._heureFermeture;
 	}
+
+    /**
+     * Getter afficherclassement
+     * @return {boolean}
+     */
+	public get afficherclassement(): boolean {
+		return this._afficherclassement;
+	}
     
 
     //SET
@@ -115,5 +124,13 @@ export class Room {
      */
 	public set heureFermeture(value: Date) {
 		this._heureFermeture = value;
+	}
+
+    /**
+     * Setter afficherclassement
+     * @param {boolean} value
+     */
+	public set afficherclassement(value: boolean) {
+		this._afficherclassement = value;
 	}
 }

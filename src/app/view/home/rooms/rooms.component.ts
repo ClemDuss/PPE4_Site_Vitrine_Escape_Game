@@ -5,11 +5,19 @@ import { City } from 'src/app/shared/models/city';
 import { CitysService } from 'src/app/shared/services/citys.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RoomDetailsComponent } from './room-details/room-details.component';
+import { Podium } from 'src/app/shared/models/podium';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 interface roomsFormat {
   idVille: number
   nomVille: string;
   nbSalles: number;
+  rooms: Room[];
+}
+
+interface roomPodium{
+  idSalle: number;
+  podium: Podium[];
 }
 
 @Component({
@@ -21,6 +29,7 @@ export class RoomsComponent implements OnInit {
   public title:string = 'Salles';
 
   public roomsList: roomsFormat[];
+  public roomPodium: roomPodium[];
 
   public _allRooms: Room[];
   public _allCitys: City[];
@@ -31,6 +40,7 @@ export class RoomsComponent implements OnInit {
     public dialog: MatDialog,
     private _roomsService: RoomsService,
     private _citysService: CitysService,
+    private _apiService: ApiService,
   ) { }
 
   ngOnInit(): void {
@@ -45,17 +55,19 @@ export class RoomsComponent implements OnInit {
       let newRoomsList: roomsFormat[] = [];
       this._allCitys = allCitys;
       allCitys.forEach((someCity)=>{
-        newRoomsList.push({idVille: someCity.id, nomVille: someCity.nomVille, nbSalles: 0})
+        newRoomsList.push({idVille: someCity.id, nomVille: someCity.nomVille, nbSalles: 0, rooms: []})
       });
       this.roomsList = newRoomsList;
       this._roomsService.getAllRooms().subscribe((allRooms)=>{
         this.roomsList.forEach(element=>{
           element.nbSalles = 0;
+          element.rooms = [];
         });
         allRooms.forEach(someRoom => {
           this.roomsList.forEach(element=>{
             if(element.idVille == someRoom.idVille){
               element.nbSalles++;
+              element.rooms.push(someRoom);
             }
           })
         });
@@ -74,6 +86,15 @@ export class RoomsComponent implements OnInit {
           this.roomsList.slice(i);
         });
         this.roomsList.reverse();
+        this.roomPodium = [];
+        this.roomsList.forEach((someRoom: roomsFormat)=>{
+          someRoom.rooms.forEach(theRoom => {
+            let theIdSalle = theRoom.id;
+            this._apiService.getPodium(theIdSalle).subscribe((data: Podium[])=>{
+              this.roomPodium.push({idSalle: theIdSalle, podium: data});
+            });
+          });
+        });
       });
     });
   }

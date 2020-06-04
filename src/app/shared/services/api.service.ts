@@ -9,6 +9,7 @@ import { Review } from '../models/review';
 import { User } from '../models/user';
 import { DisplayParameters } from '../models/display-parameters';
 import { MediasPublies } from '../models/medias-publies';
+import { Podium } from '../models/podium';
 
 //création d'interface correspondant au format de l'API pour récupérer efficacement les données en GET
 interface apiNewsFormat{
@@ -24,9 +25,10 @@ interface apiRoomFormat{
   id: number;
   nom: string;
   idville: number;
-  idthemeactuel: number;
+  idthemeactuel: string;
   heureouverture: Date;
   heurefermeture: Date;
+  afficherclassement: boolean;
 }
 
 interface apiCityFormat{
@@ -84,6 +86,13 @@ interface apiMediasPubliesFormat{
   typemedia: string,
   media: string,
   idpublication: string,
+}
+
+interface apiPodiumFormat{
+  idSalle: number;
+  nom: string;
+  prenom: string;
+  score: number;
 }
 
 const httpOptions= {
@@ -226,9 +235,10 @@ export class ApiService {
           currentRoom.id = tableGetFromApi[i].id;
           currentRoom.nom = tableGetFromApi[i].nom;
           currentRoom.idVille = tableGetFromApi[i].idville;
-          currentRoom.idThemeActuel = tableGetFromApi[i].idthemeactuel;
+          currentRoom.idThemeActuel =  parseInt(tableGetFromApi[i].idthemeactuel.split('/')[tableGetFromApi[i].idthemeactuel.split('/').length-1]);
           currentRoom.heureOuverture = new Date(tableGetFromApi[i].heureouverture);
           currentRoom.heureFermeture = new Date(tableGetFromApi[i].heurefermeture);
+          currentRoom.afficherclassement = tableGetFromApi[i].afficherclassement;
           tableGetApi.push(currentRoom);
         }
         tableGetApi.shift();
@@ -253,6 +263,13 @@ export class ApiService {
         countAllRooms.next(count);
       });
     return countAllRooms.asObservable();
+  }
+
+  public putRoom(theRoom: Room){
+    let theRoomJson: string = '{'+
+      '"afficherclassement":' + theRoom.afficherclassement + '' +
+      '}';
+    this._http.put(this._baseUrlApiRooms + '/' + theRoom.id, theRoomJson, httpOptions).subscribe(()=>{});
   }
 
 
@@ -515,5 +532,26 @@ export class ApiService {
         allMediasPublies.next(newAllMP);
       });
     return allMediasPublies;
+  }
+
+
+
+  // PODIUM
+  public getPodium(idSalle: number): Observable<Podium[]>{
+    let thePodium: Subject<Podium[]> = new Subject<Podium[]>();
+    this._http.get(this._baseUrlApiRooms + '/podium/' + idSalle)
+      .subscribe((thePodiumFromApi: apiPodiumFormat[])=>{
+        let newPodium: Podium[] = [];
+        thePodiumFromApi.forEach((element: apiPodiumFormat)=>{
+          let somePodium: Podium = new Podium();
+          somePodium.idSalle = element.idSalle;
+          somePodium.nom = element.nom;
+          somePodium.prenom = element.prenom;
+          somePodium.score = element.score;
+          newPodium.push(somePodium);
+        });
+        thePodium.next(newPodium);
+      });
+    return thePodium.asObservable();
   }
 }
